@@ -51,12 +51,22 @@ html
     //- Modal Structure
     .md-content
     .md-overlay
+        span.x-button X
 
     //- BB Template: Post
-    script(type="text/template", id="articleTemplate").
-        <h1 class="title"> <%= title %></h1>
+    script(type="text/template", id="articleTemplate")
+        h1.title <%= title %>
         <%= contentIntro %>
-        <div class="meta"><i class="icon-comments"></i>12 comments<i class="icon-time"></i><%= created %> ago<i class="icon-tags"></i>tutorial, tips, personal<a href="" class="button blue pull-right" data-alias="<%= alias %>">open</a></div>
+        .meta
+            i.icon-eye-open
+            | <%= views %> visits
+            i.icon-comments
+            | 12 comments
+            i.icon-time
+            | <%= created %> ago
+            i.icon-tags
+            | tutorial, tips, personal
+            a.button.blue.pull-right(href="#", data-alias!="<%= alias %>") open
 
     //- BB Template: Post Modal
     script(type="text/template", id="postModalTemplate")
@@ -83,4 +93,9 @@ html
     script(src='js/main.js')
     script(src='js/helpers.js')
     script(src='http://localhost:35729/livereload.js')
+    
+    // initialization script
+    script .
+        var bootstrapData = !{JSON.stringify(initData)};
+        App.init.launch(bootstrapData);
 

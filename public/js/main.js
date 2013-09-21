@@ -2,7 +2,12 @@ var App = {
     Models      : {},
     Views       : {},
     Collections : {},
-    Router      : {}
+    Router      : {},
+    init        : {
+        launch : function(data){
+            App.init.code(data);
+        }
+    }
 };
 var eve = _.extend({}, Backbone.Events);
 var BB = Backbone;
@@ -13,11 +18,11 @@ var BB = Backbone;
         return _.template( $('#' + template).html() );
     };
 
-    /**
-     * --------------- Declarations:
-     */
-
-    // Router
+    /*  
+      ==========================================================================
+        Router
+      ========================================================================== 
+    */
     App.Router = BB.Router.extend({
         routes : {
             '': 'index',
@@ -38,9 +43,13 @@ var BB = Backbone;
         }
     });
 
-    // Post Model 
+    /*  
+      ==========================================================================
+        Model: Post
+      ========================================================================== 
+    */
     App.Models.Post = BB.Model.extend({
-        idAttribute : '_id', // So that mongodb ids match
+        idAttribute : 'alias', // So that mongodb ids match
 
         defaults: {
             title: 'No title',
@@ -52,28 +61,38 @@ var BB = Backbone;
         },
 
         initialize : function(){
-            // Format Date
+            this.bind('change:created', this.formatDate);
+            // if( this.get('created') ) this.formatDate();
+        },
+
+        formatDate : function(){
             this.set( 'created', App.Helpers.timeAgoFormat( this.get('created') ) );
         }
     });
     
-    // Collection
+    /*  
+      ==========================================================================
+        Collection: Posts
+      ========================================================================== 
+    */
     App.Collections.Posts = BB.Collection.extend({
         url: '/posts',
         model: App.Models.Post
     });
 
-    // Collection View
+    /*  
+      ==========================================================================
+        View: Posts Collection
+      ========================================================================== 
+    */
     App.Views.Posts = BB.View.extend({
         el: '.posts',
 
         initialize: function(){
-            eve.on('post:open', this.openPost, this);
-            this.collection.on('sync', this.render, this);
+            this.collection.on('reset', this.render, this);
         },
 
         addOne : function(model){
-            console.log('Add one');
             var postView = new App.Views.Post({ model: model });
             this.$el.append(postView.render().el);
         },
@@ -88,7 +107,11 @@ var BB = Backbone;
         }
     });
 
-    // View
+    /*  
+      ==========================================================================
+        View: Post
+      ========================================================================== 
+    */
     App.Views.Post = BB.View.extend({
         tagName: 'article',
 
@@ -105,6 +128,12 @@ var BB = Backbone;
             var alias = $(e.currentTarget).attr('data-alias');
             App.Router.Main.navigate('open/' + alias);
             eve.trigger("post:open", alias);
+
+            // Increment View Count
+            BB.ajax({
+                url: '/posts/inc/' + alias,
+                type: 'PUT'
+            });
         },
 
         render: function(){
@@ -113,6 +142,11 @@ var BB = Backbone;
         }
     });
 
+    /*  
+      ==========================================================================
+        View: Modal Reader
+      ========================================================================== 
+    */
     App.Views.Modal = BB.View.extend({
         tagName: 'article',
 
@@ -126,10 +160,16 @@ var BB = Backbone;
         }
     });
 
+    /*  
+      ==========================================================================
+        View Reference: Overlay
+      ========================================================================== 
+    */
     App.Views.Overlay = BB.View.extend({
         el: '.md-overlay',
         events : {
-            'click': 'close'
+            'click': 'close',
+            'click .x-button' : 'close'
         },
 
         close : function(){
@@ -137,76 +177,87 @@ var BB = Backbone;
             App.Router.Main.navigate('', true);
         }
     });
-    /**
-     * --------------- Initializations:
-     */
+
+    /*  
+      ==========================================================================
+        Initializations
+      ========================================================================== 
+    */
+    App.init.code = function(initData){
     
-    // Init Collection
-    var posts = new App.Collections.Posts();
-    // Init Collection View
-    var postsView = new App.Views.Posts({ collection: posts });
-    // Init Modal Overlay
-    var modalOverlay = new App.Views.Overlay();
-
-    // posts.on('all', function(event){
-    //     console.log('Collection Event Fired: ' + event);
-    // });
-    // postsView.on('all', function(event){
-    //     console.log('CollectionView Event Fired: ' + event);
-    // });
-    var modalView = null;
-
-    eve.on('post:home', function(){
-        posts.fetch();
-        eve.trigger('modal:close');
-    });
-
-    eve.on('post:open', function(alias){
-        console.log('EVE: post:open triggered');
-
-        var post = new (BB.Model.extend({
-            url: '/posts/' + alias
-        }) );
-        
-        // Check if item already in collection
-        var found = _.find( posts.models, function(model){
-            return model.get('alias') == alias;
+        // Init Collection
+        App.Collections.posts = new App.Collections.Posts();
+        App.Collections.posts.on('all', function(e){
+            console.log(e);
         });
 
-        if(!found){
-            post.fetch({
-                success: function(){
-                    // Add new post to collection & open
-                    posts.add(post);
-                    openPost(post);
-                },
-                error: function(){
-                    console.log('failed');
-                }
+        // Init Collection View
+        App.Views.posts = new App.Views.Posts({ collection: App.Collections.posts });
+        
+        // Init Modal Overlay
+        App.Views.modalOverlay = new App.Views.Overlay();
+
+        // Bootstrap
+        App.Collections.posts.reset( initData );
+
+        /*  
+          ==========================================================================
+            Global Event Listeners
+          ========================================================================== 
+        */
+        eve.on('post:home', function(){
+            // posts.fetch();
+            eve.trigger('modal:close');
+        });
+
+        eve.on('post:open', function(alias){
+            var post = new (App.Models.Post.extend({
+                url: '/posts/' + alias
+            }));
+            post.on('all', function(e){
+                console.log(e);
+            })
+            
+            // Check if item already in collection
+            var found = _.find(  App.Collections.posts.models, function(model){
+                return model.get('alias') == alias;
             });
-        }else{
-            openPost(found);
-        }
 
-        function openPost(post){
-            // Container for Modal Element
-            modalView = new App.Views.Modal({model: post});
-            modalView.render();
-        }
+            if(!found){
+                post.fetch({
+                    success: function(){
+                        // Add new post to collection & open
+                         App.Collections.posts.add(post);
+                        openPost(post);
+                    },
+                    error: function(){
+                        console.log('failed');
+                    }
+                });
+            }else{
+                openPost(found);
+            }
 
-    });
+            function openPost(post){
+                // Container for Modal Element
+                var modalView = new App.Views.Modal({model: post});
+                modalView.render();
+            }
 
-    eve.on('modal:show', function(){
-        $('body').addClass('md-mode');
-    });
+        });
 
-    eve.on('modal:close', function(){
-        $('body').removeClass('md-mode');
-    });
+        eve.on('modal:show', function(){
+            $('body').addClass('md-mode');
+        });
 
-    // Init Router
-    App.Router.Main = new App.Router;
-    BB.history.start();
+        eve.on('modal:close', function(){
+            $('body').removeClass('md-mode');
+        });
+
+        // Init Router
+        App.Router.Main = new App.Router;
+        BB.history.start();
+    };
 
 
 // })(this, jQuery, Backbone, _);

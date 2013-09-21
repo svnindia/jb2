@@ -19,6 +19,16 @@ exports.list = function(req, res){
 };
 
 exports.item = function(req, res){
+    // Get item
+    db.findOne({
+        alias: req.params.alias
+    }, function(err, post) {
+        if(err) throw err;
+        res.json(200, post);
+    }); 
+};
+
+exports.itemInc = function(req, res){
     // Increment View count
     db.update(
         { alias: req.params.alias },
@@ -26,14 +36,5 @@ exports.item = function(req, res){
             $inc : { views: 1 }
         }
     );
-
-    // Get item
-    db.findOne({
-        alias: req.params.alias
-    }, function(err, post) {
-        if(err) throw err;
-        res.json(200, post);
-    });
-    
-
-};
+    res.send("Incremented", 200);
+}
