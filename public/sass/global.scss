@@ -1,0 +1,291 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+body{
+    background-color: $background-main;
+    color: $text-main;
+
+    line-height: 1.5;
+    font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+a{
+    color: $text-secondary;
+    &:visited{}
+    &:hover{}
+}
+
+p{ font-weight: normal }
+
+hr{
+    border: 0;
+    height: 0;
+    border-bottom: 1px solid $gray-lighter;
+}
+
+#main{
+    width: 100%;
+}
+
+.pull-left{ float: left }
+.pull-right{ float: right }
+
+.clear {
+    @include clear;
+}
+
+.text-left           { text-align: left; }
+.text-right          { text-align: right; }
+.text-center         { text-align: center; }
+
+.small   { font-size: 85%; }
+.x-small { font-size: 80%; }
+.container{
+    overflow: hidden;
+    padding-left: $sidebarWidth;
+
+    .column{
+        position: relative;
+        float: left;
+        margin-bottom: -99999px;
+        padding-bottom: 99999px;
+    }
+}
+
+// Button
+.button{
+    color: white;
+    padding: 2px 20px;
+    line-height: 20px;
+    text-decoration: none;
+    text-transform: uppercase;
+    @include border-radius(4px);
+
+    $lighten-amount: 4%;
+
+    &.green{ 
+        background-color: $flat-green; 
+        &:hover{ background-color: lighten($flat-green, $lighten-amount) }
+    }
+    &.blue{ 
+        background-color: $flat-blue;
+        &:hover{ background-color: lighten($flat-blue, $lighten-amount) }
+    }
+    &.orange{ 
+        background-color: $flat-orange;
+        &:hover{ background-color: lighten($flat-orange, $lighten-amount) }
+    }
+
+
+
+}
+
+/*  ==========================================================================
+    Header: BreadCrums, Searches
+    ========================================================================== */
+    $gutter: 40px;
+    header{
+        height: 20px;
+        padding: 20px $gutter 20px $gutter;
+        background-color: white;
+        span{
+            color: $gray-lighter;
+        }
+
+        .search{
+            position: relative;
+            width: 190px;
+            top: -20px;
+            right: -40px;
+            padding: 21.5px 20px;
+            border: none;
+            border-left: 1px solid $gray-lighter;
+            @include placeholder($gray-lighter);
+        }
+    }
+
+/*  ==========================================================================
+    Sidebar: Logo, Nav..etc
+    ========================================================================== */
+    #sidebar{
+        width: $sidebarWidth;
+        right: $sidebarWidth;
+        margin-right: -$sidebarWidth;
+        background-color: $blue-dark-light;
+    height: 1000px;
+
+        .logo{
+            height: 60px;
+            background-color: $blue-dark;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-image: url(../img/logo.png);
+            @include image-2x("../img/logo-2x.png", 105px, 29px);
+        }
+
+        .nav{
+            list-style-type: none;
+            padding: 0;
+            font-size: 18px;
+            margin: 20px 0;
+            li{
+                border-left: 2px solid transparent;
+                &:hover,&.active{
+                    border-left: 2px solid $text-secondary;
+                    background-color: #2e3136;
+                    a{
+                        i{
+                            color: $gray-lighter;
+                        }
+                    }
+                }
+            }
+            a{
+                color: $gray-light;
+                width: 100%;
+                display: block;
+                text-decoration: none;
+                margin-left: 10px;
+                padding: 10px 0; 
+                i{
+                    margin-right: 20px;
+                }
+            }
+        }
+
+        .comments{
+            padding: 5px 10px;
+            border-bottom: 1px solid #2e3136;
+
+            p{
+                margin: 0 0 5px 0;
+                color: $gray-light;
+            }
+
+            >span{
+                margin: 0 0 5px 0;
+                display: block;
+                font-size: 90%;
+            }
+        }
+        
+        // Side Bar headers / titles
+        h3{
+            padding: 5px 10px;
+            background-color: $blue-dark;
+            text-transform: uppercase;
+            font-size: 13px;
+            color: $gray-lighter;
+        }
+
+        footer{
+            color: #41464c;
+            text-transform: uppercase;
+            margin-top: 40px;
+            display: block;
+            width: 100%;
+            font-size: x-small;
+        }
+    }
+
+/*  ==========================================================================
+    Content
+    ========================================================================== */
+    .content article{
+        .title{
+            font-weight: 400;
+            color: $blue-dark-light; 
+            text-transform: uppercase;
+        }
+        padding: 5px 25px;
+        margin: $gutter;
+        background: white;
+        @include border-radius(4px);
+        @include box-shadow( 2px, 0, 0, rgba(210,211,212,.75) );
+
+        .meta{
+            margin: 0 -25px;
+            color: $gray-lightish;
+            padding: 15px 25px;
+            border-top: 1px solid $gray-lighter;
+            margin-top: 20px;
+            i{ margin: 0 10px 0 25px }
+            i:first-child{ margin-left: 0 }
+        }
+    }
+
+/*  ==========================================================================
+    Modal Viewer
+    ========================================================================== */
+    
+    // Overlay 
+    .md-overlay{
+        visibility: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        background-color: rgba(32, 40, 49, 0.86);
+        opacity: 0;
+        
+        -webkit-transition: all 0.4s;
+        transition: all 0.4s;
+    }
+
+    // Content
+    .md-content{
+        margin: 40px auto;
+        position: relative;
+        width: 80%;
+        border: 10px solid rgba(255, 255, 255, 0.1);
+        z-index: 147;
+        display: none;
+
+    }
+
+    // Article
+    .md-content article {  
+        color: $blue-dark-light;
+        background-color: white;
+        padding: 0 25px;
+        padding-bottom: 15px;
+
+        .info{
+            border-left: 3px solid $flat-green;
+            border-bottom: 1px solid $gray-lighter;
+            padding: 5px 20px;
+            h1{ margin: 0}
+            .meta{
+                color: $gray-light;
+                i{ margin: 0 10px 0 25px }
+                i:first-child{ margin-left: 0 }
+            }
+        }
+        
+        .full{
+            margin: 0 -25px;
+        }
+
+    }
+    
+    // Modal Mode
+    body.md-mode .md-content{ display: block }
+    body.md-mode .container{ 
+        position: fixed;
+        @include blur(3px);
+        z-index: 0;
+    }
+
+    body.md-mode .md-overlay{
+        visibility: visible;
+        opacity: 1;
+    }
+
+
+/* ==========================================================================
+   Debug Trick
+   ========================================================================== */
+// * {
+//     background:rgba(0,0,0,0.2);
+// }

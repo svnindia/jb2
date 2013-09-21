@@ -1,0 +1,86 @@
+doctype 5
+html
+  head
+    title= 'JB - Single Page App v2'
+    link(rel='stylesheet', href='css/main.css')
+    
+  body.clear
+    .container
+        #sidebar.column
+            //- Logo Section
+            .logo.clear
+
+            //- Navigation Menu
+            ul.nav.clear
+                li
+                    a(href="#") 
+                        i.icon-home
+                        | Blog
+                li.active
+                    a(href="#") 
+                        i.icon-briefcase
+                        | Resume
+                li
+                    a(href="#") 
+                        i.icon-envelope
+                        | Contact
+
+            //- Recent Comments Secion
+            h3 Recent Comments
+            div.comments.small
+                p Great tutorial.. really helped me understand this concept
+                span.text-right 6 min ago <span>by<span> John Myer
+
+            div.comments.small
+                p Another pretty much useless comment with small words.
+                span.text-right 1 hr ago <span>by<span> Jose Browne
+
+            footer.clear.text-center &copy; 2013<br>Powered by Express & MongoDB
+
+
+        #main.column
+            header.clear
+                .crums.pull-left <span>Blog ></span> The Title of a Blog Post
+                input(placeholder="Search for it...").search.pull-right  Search input
+            //- Content container
+            .content.clear
+                .posts.clear
+
+
+
+    //- Modal Structure
+    .md-content
+    .md-overlay
+
+    //- BB Template: Post
+    script(type="text/template", id="articleTemplate").
+        <h1 class="title"> <%= title %></h1>
+        <%= contentIntro %>
+        <div class="meta"><i class="icon-comments"></i>12 comments<i class="icon-time"></i><%= created %> ago<i class="icon-tags"></i>tutorial, tips, personal<a href="" class="button blue pull-right" data-alias="<%= alias %>">open</a></div>
+
+    //- BB Template: Post Modal
+    script(type="text/template", id="postModalTemplate")
+        .info.full
+            h1.title <%= title %>
+            .meta
+                i.icon-eye-open
+                | <%= views %> visits
+                i.icon-comments
+                | 12 comments
+                i.icon-time
+                | <%= created %> ago
+                i.icon-tags
+                | tutorial, tips, personal
+        .content
+            <%= content %>
+        hr.full
+        h3 Sharing Stuff
+        h3 Comments 
+
+    script(src='components/jquery/jquery.js')
+    script(src='components/underscore/underscore.js')
+    script(src='components/backbone/backbone.js')
+    script(src='js/main.js')
+    script(src='js/helpers.js')
+    script(src='http://localhost:35729/livereload.js')
+
