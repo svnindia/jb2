@@ -16,7 +16,7 @@ var db = mongo.db( config.db.url, {safe: true} ).collection('posts');
 
 var options = {
   'sort'  : { created: -1 },
-  'limit' : 10
+  'limit' : 5
 };
 db.find({}, options).toArray(function(err, initData){
   

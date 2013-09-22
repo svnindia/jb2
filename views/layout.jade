@@ -2,6 +2,7 @@ doctype 5
 html
   head
     title= 'JB - Single Page App v2'
+    meta(charset="UTF-8")
     link(rel='stylesheet', href='css/main.css')
     
   body.clear
@@ -97,5 +98,5 @@ html
     // initialization script
     script .
         var bootstrapData = !{JSON.stringify(initData)};
-        App.init.launch(bootstrapData);
+        App.init(bootstrapData);
 

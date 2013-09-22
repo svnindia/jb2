@@ -3,11 +3,6 @@ var App = {
     Views       : {},
     Collections : {},
     Router      : {},
-    init        : {
-        launch : function(data){
-            App.init.code(data);
-        }
-    }
 };
 var eve = _.extend({}, Backbone.Events);
 var BB = Backbone;
@@ -49,7 +44,7 @@ var BB = Backbone;
       ========================================================================== 
     */
     App.Models.Post = BB.Model.extend({
-        idAttribute : 'alias', // So that mongodb ids match
+        idAttribute : 'alias',
 
         defaults: {
             title: 'No title',
@@ -58,15 +53,6 @@ var BB = Backbone;
             views: 0,
             content: 'empty',
             contentIntro: 'empty'
-        },
-
-        initialize : function(){
-            this.bind('change:created', this.formatDate);
-            // if( this.get('created') ) this.formatDate();
-        },
-
-        formatDate : function(){
-            this.set( 'created', App.Helpers.timeAgoFormat( this.get('created') ) );
         }
     });
     
@@ -93,8 +79,16 @@ var BB = Backbone;
         },
 
         addOne : function(model){
+            if( !this.collection.contains(model) ){
+                this.collection.add(model);
+            }
+            this.formatDate(model);
             var postView = new App.Views.Post({ model: model });
             this.$el.append(postView.render().el);
+        },
+
+        formatDate : function(model){
+            model.set( 'created', App.Helpers.timeAgoFormat( model.get('created') ) );
         },
 
         render : function(){
@@ -105,6 +99,7 @@ var BB = Backbone;
             }, this);
             return this;
         }
+        
     });
 
     /*  
@@ -183,13 +178,10 @@ var BB = Backbone;
         Initializations
       ========================================================================== 
     */
-    App.init.code = function(initData){
+    App.init = function(initData){
     
         // Init Collection
         App.Collections.posts = new App.Collections.Posts();
-        App.Collections.posts.on('all', function(e){
-            console.log(e);
-        });
 
         // Init Collection View
         App.Views.posts = new App.Views.Posts({ collection: App.Collections.posts });
@@ -211,12 +203,6 @@ var BB = Backbone;
         });
 
         eve.on('post:open', function(alias){
-            var post = new (App.Models.Post.extend({
-                url: '/posts/' + alias
-            }));
-            post.on('all', function(e){
-                console.log(e);
-            })
             
             // Check if item already in collection
             var found = _.find(  App.Collections.posts.models, function(model){
@@ -224,10 +210,14 @@ var BB = Backbone;
             });
 
             if(!found){
+                var post = new (App.Models.Post.extend({
+                    url: '/posts/' + alias
+                }));
+
                 post.fetch({
                     success: function(){
                         // Add new post to collection & open
-                         App.Collections.posts.add(post);
+                        App.Views.posts.addOne(post);
                         openPost(post);
                     },
                     error: function(){
