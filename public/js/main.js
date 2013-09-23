@@ -62,7 +62,12 @@ var BB = Backbone;
       ========================================================================== 
     */
     App.Collections.Posts = BB.Collection.extend({
-        url: '/posts',
+        getting: false,
+        page : 1,
+        end: false,
+        url: function(){
+            return '/posts';
+        },
         model: App.Models.Post
     });
 
@@ -75,10 +80,45 @@ var BB = Backbone;
         el: '.posts',
 
         initialize: function(){
+            var that = this;
             this.collection.on('reset', this.render, this);
+            this.collection.on('add', this.addOne, this);
+            
+            // Listen for scroll events on body
+            $(window).on('scroll', function(){
+                that.onScroll();
+            });
+        },
+
+        onScroll: function(){
+            var that = this;
+            var body = $('body');
+            var height = $('body').outerHeight() + 20;
+            if( 
+                !this.collection.end && /* Not at end of list */
+                !this.collection.getting && /* Not waiting for response */
+                $(window).scrollTop() + $(window).height() == $(document).height() /* is at bottom */
+              ){
+                this.collection.getting = true;                
+                this.collection.page += 1;
+                this.collection.fetch({
+                    remove: false,
+                    data: {page: this.collection.page},
+                    success: function(collection, response){
+                        if( _.isEmpty(response) ){ that.onEnd(); }
+                        that.collection.getting = false;
+                    }
+                });
+            }
+        },
+
+        onEnd : function(){
+            this.collection.end = true;
+            // TODO: Add visual indicator of end list
         },
 
         addOne : function(model){
+            if(!model) return;
             if( !this.collection.contains(model) ){
                 this.collection.add(model);
             }
@@ -127,7 +167,11 @@ var BB = Backbone;
             // Increment View Count
             BB.ajax({
                 url: '/posts/inc/' + alias,
-                type: 'PUT'
+                type: 'PUT',
+                success: function(){
+                    var post = App.Collections.posts.get(alias);
+                    post.set( 'views', post.get('views') + 1);
+                }
             });
         },
 
@@ -182,15 +226,15 @@ var BB = Backbone;
     
         // Init Collection
         App.Collections.posts = new App.Collections.Posts();
-
         // Init Collection View
         App.Views.posts = new App.Views.Posts({ collection: App.Collections.posts });
+        App.Collections.posts.on('all', function(e){console.log(e);})
+        // Bootstrap
+        App.Collections.posts.reset( initData );
         
         // Init Modal Overlay
         App.Views.modalOverlay = new App.Views.Overlay();
 
-        // Bootstrap
-        App.Collections.posts.reset( initData );
 
         /*  
           ==========================================================================

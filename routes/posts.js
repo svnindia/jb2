@@ -7,11 +7,13 @@ var db = mongo.db( config.db.url, {safe: false} ).collection('posts');
 
 exports.list = function(req, res){
     // Get all options
+    var skip = config.qty * (req.query.page -1);
+    console.log(skip);
     var options = {
         'sort'  : { created: -1 },
-        'limit' : 10
+        'limit' : config.qty,
+        'skip'  : skip
     };
-
     db.findItems({}, options, function(err, posts){
         if(err) throw err;
         res.json(200, posts);
@@ -25,7 +27,7 @@ exports.item = function(req, res){
     }, function(err, post) {
         if(err) throw err;
         res.json(200, post);
-    }); 
+    });
 };
 
 exports.itemInc = function(req, res){
@@ -37,4 +39,4 @@ exports.itemInc = function(req, res){
         }
     );
     res.send("Incremented", 200);
-}
+};
