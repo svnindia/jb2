@@ -4,7 +4,7 @@ body{
     color: $text-main;
 
     line-height: 1.5;
-    font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font:16px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -26,6 +26,12 @@ img {
     max-width: 100%;
     height: auto;
     width: auto\9; /* ie8 */
+}
+
+article img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #main{
@@ -68,15 +74,15 @@ img {
 
     $lighten-amount: 4%;
 
-    &.green{ 
-        background-color: $flat-green; 
+    &.green{
+        background-color: $flat-green;
         &:hover{ background-color: lighten($flat-green, $lighten-amount) }
     }
-    &.blue{ 
+    &.blue{
         background-color: $flat-blue;
         &:hover{ background-color: lighten($flat-blue, $lighten-amount) }
     }
-    &.orange{ 
+    &.orange{
         background-color: $flat-orange;
         &:hover{ background-color: lighten($flat-orange, $lighten-amount) }
     }
@@ -85,10 +91,10 @@ img {
 
 }
 
-/*  
+/*
   ==========================================================================
     Header: BreadCrums, Searches
-  ========================================================================== 
+  ==========================================================================
 */
     $gutter: 40px;
     header{
@@ -104,24 +110,26 @@ img {
             width: 190px;
             top: -20px;
             right: -40px;
-            padding: 21.5px 20px;
+            padding: 20px 20px;
             border: none;
             border-left: 1px solid $gray-lighter;
             @include placeholder($gray-lighter);
         }
     }
 
-/*  
+/*
   ==========================================================================
     Sidebar: Logo, Nav..etc
-  ========================================================================== 
+  ==========================================================================
 */
     #sidebar{
+        position: fixed;
+        left: 0;
         width: $sidebarWidth;
         right: $sidebarWidth;
         margin-right: -$sidebarWidth;
         background-color: $blue-dark-light;
-    height: 1000px;
+        height: 1000px;
 
         .logo{
             height: 60px;
@@ -135,7 +143,7 @@ img {
         .nav{
             list-style-type: none;
             padding: 0;
-            font-size: 18px;
+            // font-size: 18px;
             margin: 20px 0;
             li{
                 border-left: 2px solid transparent;
@@ -155,7 +163,7 @@ img {
                 display: block;
                 text-decoration: none;
                 margin-left: 10px;
-                padding: 10px 0; 
+                padding: 10px 0;
                 i{
                     margin-right: 20px;
                 }
@@ -177,7 +185,7 @@ img {
                 font-size: 90%;
             }
         }
-        
+
         // Side Bar headers / titles
         h3{
             padding: 5px 10px;
@@ -197,16 +205,19 @@ img {
         }
     }
 
-/*  
+/*
   ==========================================================================
     Content
-  ========================================================================== 
+  ==========================================================================
 */
     .content article{
         .title{
             font-weight: 400;
-            color: $blue-dark-light; 
+            color: $blue-dark-light;
             text-transform: uppercase;
+            &:hover{
+              cursor: pointer;
+            }
         }
         padding: 5px 25px;
         margin: $gutter;
@@ -215,8 +226,9 @@ img {
         @include box-shadow( 2px, 0, 0, rgba(210,211,212,.75) );
 
         .meta{
+            font-size: 95%;
             margin: 0 -25px;
-            color: $gray-lightish;
+            color: $gray-light;
             padding: 15px 25px;
             border-top: 1px solid $gray-lighter;
             margin-top: 20px;
@@ -225,12 +237,12 @@ img {
         }
     }
 
-/*  
+/*
   ==========================================================================
     Modal Viewer
-  ========================================================================== 
+  ==========================================================================
 */
-    // Overlay 
+    // Overlay
     .md-overlay{
         visibility: hidden;
         position: fixed;
@@ -241,7 +253,7 @@ img {
         z-index: 100;
         background-color: rgba(32, 40, 49, 0.86);
         opacity: 0;
-        
+
     }
 
     // Content
@@ -256,7 +268,7 @@ img {
     }
 
     // Article
-    .md-content article {  
+    .md-content article {
         color: $blue-dark-light;
         background-color: white;
         padding: 0 25px;
@@ -273,16 +285,16 @@ img {
                 i:first-child{ margin-left: 0 }
             }
         }
-        
+
         .full{
             margin: 0 -25px;
         }
 
     }
-    
+
     // Modal Mode
     body.md-mode .md-content{ display: block }
-    body.md-mode .container{ 
+    body.md-mode .container{
         position: fixed;
         @include blur(3px);
         z-index: 0;
@@ -311,10 +323,10 @@ img {
     }
 
 
-/* 
+/*
   ==========================================================================
    Debug Trick
-  ========================================================================== 
+  ==========================================================================
 */
 // * {
 //     background:rgba(0,0,0,0.2);

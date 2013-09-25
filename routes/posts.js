@@ -7,14 +7,24 @@ var db = mongo.db( config.db.url, {safe: false} ).collection('posts');
 
 exports.list = function(req, res){
     // Get all options
-    var skip = config.qty * (req.query.page -1);
-    console.log(skip);
-    var options = {
-        'sort'  : { created: -1 },
-        'limit' : config.qty,
-        'skip'  : skip
-    };
-    db.findItems({}, options, function(err, posts){
+    var options = {};
+    options.sort = { created: -1 };
+
+    // Pagination
+    if(req.query.page){
+        var skip = config.qty * (req.query.page -1);
+        options.limit = config.qty;
+        options.skip = skip;
+    }
+
+    // Fields
+    var fields = {};
+    if(req.query.search){
+        var q = new RegExp('.*' + req.query.search +'.*', 'i');
+        fields.$or = [ { content: q }, { title: q } ];
+    }
+
+    db.findItems(fields, options, function(err, posts){
         if(err) throw err;
         res.json(200, posts);
     });

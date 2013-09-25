@@ -1,3 +1,4 @@
+@import url(../components/nprogress/nprogress.css);
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
 article,
 aside,
@@ -2121,11 +2122,154 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
   content: "\f18b";
 }
 
+pre {
+  margin: 10px -25px;
+}
+
+pre code {
+  font-family: 'Monaco', 'Menlo', monospace;
+  background-color: #282b2f;
+  display: block;
+  overflow: auto;
+  clear: both;
+  padding: 0 10px;
+}
+
+.pln {
+  color: #f8f7f2;
+}
+
+@media screen {
+  .str {
+    color: #e6d77a;
+  }
+
+  .kwd {
+    color: #e85274;
+  }
+
+  .com {
+    color: #485457;
+  }
+
+  .typ {
+    color: #f8f7f2;
+  }
+
+  .lit {
+    color: #b5d93a;
+  }
+
+  .pun,
+  .opn,
+  .clo {
+    color: #f8f7f2;
+  }
+
+  .tag {
+    color: #aaa;
+  }
+
+  .atn {
+    color: #e85274;
+  }
+
+  .atv {
+    color: #b5d83a;
+  }
+
+  .dec,
+  .var {
+    color: #f8f7f2;
+  }
+
+  .fun {
+    color: #e85379;
+  }
+}
+@media print, projection {
+  pre code {
+    background-color: none;
+    display: block;
+    padding: 10px;
+    overflow: visible;
+  }
+
+  .pln {
+    color: #000;
+  }
+
+  .str {
+    color: #060;
+  }
+
+  .kwd {
+    color: #006;
+    font-weight: bold;
+  }
+
+  .com {
+    color: #600;
+    font-style: italic;
+  }
+
+  .typ {
+    color: #404;
+    font-weight: bold;
+  }
+
+  .lit {
+    color: #044;
+  }
+
+  .pun,
+  .opn,
+  .clo {
+    color: #440;
+  }
+
+  .tag {
+    color: #006;
+    font-weight: bold;
+  }
+
+  .atn {
+    color: #404;
+  }
+
+  .atv {
+    color: #060;
+  }
+}
+ol.linenums {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li.L0,
+li.L1,
+li.L2,
+li.L3,
+li.L5,
+li.L6,
+li.L7,
+li.L8 {
+  list-style-type: none;
+}
+
+li.L1,
+li.L3,
+li.L5,
+li.L7,
+li.L9 {
+  background: #eee;
+}
+
 body {
   background-color: #ebeced;
   color: grey;
   line-height: 1.5;
-  font: 14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 16px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -2148,6 +2292,12 @@ img {
   height: auto;
   width: auto\9;
   /* ie8 */
+}
+
+article img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #main {
@@ -2232,10 +2382,10 @@ img {
   background-color: #e95d4e;
 }
 
-/*  
+/*
   ==========================================================================
     Header: BreadCrums, Searches
-  ========================================================================== 
+  ==========================================================================
 */
 header {
   height: 20px;
@@ -2250,7 +2400,7 @@ header .search {
   width: 190px;
   top: -20px;
   right: -40px;
-  padding: 21.5px 20px;
+  padding: 20px 20px;
   border: none;
   border-left: 1px solid #eeeeee;
 }
@@ -2267,12 +2417,14 @@ header .search::-webkit-input-placeholder {
   color: #eeeeee;
 }
 
-/*  
+/*
   ==========================================================================
     Sidebar: Logo, Nav..etc
-  ========================================================================== 
+  ==========================================================================
 */
 #sidebar {
+  position: fixed;
+  left: 0;
   width: 220px;
   right: 220px;
   margin-right: -220px;
@@ -2296,7 +2448,6 @@ header .search::-webkit-input-placeholder {
 #sidebar .nav {
   list-style-type: none;
   padding: 0;
-  font-size: 18px;
   margin: 20px 0;
 }
 #sidebar .nav li {
@@ -2349,10 +2500,10 @@ header .search::-webkit-input-placeholder {
   font-size: x-small;
 }
 
-/*  
+/*
   ==========================================================================
     Content
-  ========================================================================== 
+  ==========================================================================
 */
 .content article {
   padding: 5px 25px;
@@ -2370,9 +2521,13 @@ header .search::-webkit-input-placeholder {
   color: #282b2f;
   text-transform: uppercase;
 }
+.content article .title:hover {
+  cursor: pointer;
+}
 .content article .meta {
+  font-size: 95%;
   margin: 0 -25px;
-  color: #cccccc;
+  color: #999999;
   padding: 15px 25px;
   border-top: 1px solid #eeeeee;
   margin-top: 20px;
@@ -2384,10 +2539,10 @@ header .search::-webkit-input-placeholder {
   margin-left: 0;
 }
 
-/*  
+/*
   ==========================================================================
     Modal Viewer
-  ========================================================================== 
+  ==========================================================================
 */
 .md-overlay {
   visibility: hidden;
@@ -2467,10 +2622,10 @@ body.md-mode .md-overlay {
   opacity: 1;
 }
 
-/* 
+/*
   ==========================================================================
    Debug Trick
-  ========================================================================== 
+  ==========================================================================
 */
 
 /*# sourceMappingURL=main.css.map */
