@@ -3,6 +3,7 @@
  */
 var config = require('../config');
 var mongo = require('mongoskin');
+var moment = require('moment');
 var db = mongo.db( config.db.url, {safe: false} ).collection('posts');
 
 exports.list = function(req, res){
@@ -26,6 +27,10 @@ exports.list = function(req, res){
 
     db.findItems(fields, options, function(err, posts){
         if(err) throw err;
+        for (var i = 0; i < posts.length; i++) {
+            // Format Date
+            posts[i].created = moment(posts[i].created).fromNow();
+        }
         res.json(200, posts);
     });
 };
@@ -36,6 +41,10 @@ exports.item = function(req, res){
         alias: req.params.alias
     }, function(err, post) {
         if(err) throw err;
+
+        // Format Date
+        post.created = moment(post.created).fromNow();
+
         res.json(200, post);
     });
 };

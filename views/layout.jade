@@ -4,12 +4,12 @@ html
     title= 'JB - Single Page App v2'
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
-    meta(name="viewport", content="width=device-width, height=device-height, initial-scale=1.0")
+    meta(name="viewport", content="width=device-width, height=device-height, initial-scale=1.0 user-scalable=no")
     link(rel='stylesheet', href='css/main.css')
 
-  body.clear
+  body(ontouchstart).clear
     .container
-        #sidebar.column
+        #sidebar.column.animate
             //- Logo Section
             a(href="/")
                 .logo.clear
@@ -19,15 +19,15 @@ html
                 li
                     a(href="/")
                         i.icon-home
-                        | Blog
+                        | All
                 li.active
                     a(href="#")
                         i.icon-briefcase
-                        | Resume
+                        | Tips
                 li
                     a(href="#")
                         i.icon-envelope
-                        | Contact
+                        | Personal
 
             //- Recent Comments Secion
             h3 Recent Comments
@@ -43,12 +43,16 @@ html
 
 
         #main.column
-            header.clear
-                .crums.pull-left <span>Blog ></span> The Title of a Blog Post
-                form.searchForm
-                    input(placeholder="Search for it...").search.pull-right  Search input
+            header.clear.animate
+                .inner
+                    .title.pull-left
+                        a(href="#").sidebar-btn
+                            i.icon-reorder
+                        | Blog
+                    //- form.searchForm
+                    //-     input(placeholder="Search for it...").search.pull-right  Search input
             //- Content container
-            .content.clear
+            .content.clear.animate
                 .posts.clear
 
 
@@ -68,7 +72,7 @@ html
             i.icon-comments
             | 12 comments
             i.icon-time
-            | <%= created %> ago
+            | <%= created %>
             i.icon-tags
             | tutorial, tips, personal
             a.button.blue.pull-right(href="#", data-alias!="<%= alias %>") open
@@ -83,7 +87,7 @@ html
                 i.icon-comments
                 | 12 comments
                 i.icon-time
-                | <%= created %> ago
+                | <%= created %>
                 i.icon-tags
                 | tutorial, tips, personal
         .content

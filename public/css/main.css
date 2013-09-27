@@ -2133,6 +2133,7 @@ pre code {
   overflow: auto;
   clear: both;
   padding: 0 10px;
+  font-size: 80%;
 }
 
 .pln {
@@ -2353,6 +2354,18 @@ article img {
   padding-bottom: 99999px;
 }
 
+.animate {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  -moz-transition: all .2s ease-out;
+  -webkit-transition: all .2s ease-out;
+  -o-transition: all .2s ease-out;
+  transition: all .2s ease-out;
+}
+
 .button {
   color: white;
   padding: 2px 20px;
@@ -2384,13 +2397,17 @@ article img {
 
 /*
   ==========================================================================
-    Header: BreadCrums, Searches
+    Header
   ==========================================================================
 */
 header {
+  z-index: 100;
   height: 20px;
-  padding: 20px 40px 20px 40px;
+  padding: 20px 4% 20px 4%;
   background-color: white;
+  -webkit-box-shadow: 0 1px 0 rgba(210, 211, 212, 0.25);
+  -moz-box-shadow: 0 1px 0 rgba(210, 211, 212, 0.25);
+  box-shadow: 0 1px 0 rgba(210, 211, 212, 0.25);
 }
 header span {
   color: #eeeeee;
@@ -2415,6 +2432,26 @@ header .search:-ms-input-placeholder {
 }
 header .search::-webkit-input-placeholder {
   color: #eeeeee;
+}
+header .title {
+  font-size: 26px;
+  color: #282b2f;
+  position: relative;
+  top: -10px;
+  font-weight: 200;
+  text-transform: uppercase;
+  padding-left: 25px;
+}
+header .title a {
+  padding: 5px 20px 25px 0;
+  display: none;
+}
+header .title a:active i {
+  color: #1e2124;
+  text-shadow: 0px 0px 23px #4E6B91;
+}
+header .title a i {
+  color: #999999;
 }
 
 /*
@@ -2507,7 +2544,8 @@ header .search::-webkit-input-placeholder {
 */
 .content article {
   padding: 5px 25px;
-  margin: 40px;
+  margin: 30px 4%;
+  z-index: 1;
   background: white;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -2627,5 +2665,68 @@ body.md-mode .md-overlay {
    Debug Trick
   ==========================================================================
 */
+@media screen and (max-width: 995px) {
+  #sidebar {
+    left: -220px;
+    z-index: 100000;
+  }
+
+  .container {
+    padding-left: 0;
+  }
+  .container.showSidebar #sidebar {
+    left: 0;
+  }
+  .container.showSidebar header {
+    left: 220px;
+    z-index: 2;
+  }
+  .container.showSidebar .content {
+    position: relative;
+    left: 220px;
+    z-index: 1;
+  }
+
+  header {
+    position: fixed;
+    width: 100%;
+    background-color: white;
+    padding: 0;
+    height: 40px;
+  }
+  header .inner {
+    padding: 10px 4%;
+  }
+  header .search {
+    padding: 10px 18px;
+    top: -10px;
+  }
+  header .title {
+    padding-left: 0;
+    font-size: 22px;
+  }
+  header .title a {
+    text-decoration: none;
+    display: inline-block;
+  }
+  header .title a:hover {
+    text-decoration: none;
+  }
+
+  .content {
+    margin-top: 20px;
+  }
+  .content article .meta {
+    text-align: center;
+    display: block;
+  }
+  .content article .meta a {
+    float: none;
+    display: block;
+    max-width: 200px;
+    margin: 11px auto 0 auto;
+    padding: 8px 0;
+  }
+}
 
 /*# sourceMappingURL=main.css.map */

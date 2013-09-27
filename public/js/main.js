@@ -47,18 +47,8 @@ var BB = Backbone;
     App.Models.Post = BB.Model.extend({
         idAttribute : 'alias',
 
-        initialize: function(){
-            this.bind('change:created ', function(){ this.formatDate(); });
-        },
-
         url: function(){
             return "/posts/" + this.id;
-        },
-
-        formatDate : function(model){
-            if(!this.get('created')) return;
-            if(!this.get('created').endsWith('Z')) return;
-            this.set( 'created', App.Helpers.timeAgoFormat( this.get('created') ), {silent: true} );
         },
 
         defaults: {
@@ -133,6 +123,7 @@ var BB = Backbone;
         },
 
         bindEvents : function(){ $(window).on('scroll.collection', this.onScroll ); },
+
         unbindEvents : function(){ $(window).off('scroll.collection'); },
 
         onEnd : function(){
@@ -162,7 +153,6 @@ var BB = Backbone;
 
                 this.collection.add(model);
             }
-            model.formatDate();
             var postView = new App.Views.Post({ model: model });
             this.$el.append(postView.render().el);
         },
@@ -265,6 +255,42 @@ var BB = Backbone;
 
     /*
       ==========================================================================
+        View Reference: Sidebar
+      ==========================================================================
+    */
+    App.Views.Sidebar = BB.View.extend({
+        el: '#sidebar',
+        events: {
+
+        },
+
+        show: function(){
+            $('.container').addClass("showSidebar");
+        },
+
+        hide: function(){
+            $('.container').removeClass("showSidebar");
+        }
+    });
+
+    App.Views.Header = BB.View.extend({
+        el: 'header',
+        events: {
+            'click .sidebar-btn': 'toggleSidebar'
+        },
+
+        toggleSidebar: function(e){
+            e && e.preventDefault();
+            if( $('.container').hasClass("showSidebar") ){
+                App.Views.sidebar.hide();
+            }else{
+                App.Views.sidebar.show();
+            }
+        }
+    });
+
+    /*
+      ==========================================================================
         Initializations
       ==========================================================================
     */
@@ -272,7 +298,6 @@ var BB = Backbone;
 
         // Init Collection
         App.Collections.posts = new App.Collections.Posts();
-        App.Collections.posts.on('all', function(e){console.log('Collection: ' + e);});
 
         // Init Collection View
         App.Views.posts = new App.Views.Posts({ collection: App.Collections.posts });
@@ -282,6 +307,12 @@ var BB = Backbone;
 
         // Init Modal Overlay
         App.Views.modalOverlay = new App.Views.Overlay();
+
+        // Init Sidebar
+        App.Views.sidebar = new App.Views.Sidebar();
+
+        // Init Header
+        App.Views.header = new App.Views.Header();
 
         /*
           ==========================================================================

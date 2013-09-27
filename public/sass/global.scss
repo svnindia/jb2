@@ -63,6 +63,19 @@ article img {
     }
 }
 
+.animate {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+
+  -moz-transition: all .2s ease-out;
+  -webkit-transition: all .2s ease-out;
+  -o-transition: all .2s ease-out;
+  transition: all .2s ease-out;
+}
+
 // Button
 .button{
     color: white;
@@ -93,17 +106,20 @@ article img {
 
 /*
   ==========================================================================
-    Header: BreadCrums, Searches
+    Header
   ==========================================================================
 */
-    $gutter: 40px;
+    $gutter: 4%;
     header{
+        z-index: 100;
         height: 20px;
         padding: 20px $gutter 20px $gutter;
         background-color: white;
+        @include box-shadow( 1px, 0, 0, rgba(210,211,212,.25) );
         span{
             color: $gray-lighter;
         }
+
 
         .search{
             position: relative;
@@ -114,6 +130,29 @@ article img {
             border: none;
             border-left: 1px solid $gray-lighter;
             @include placeholder($gray-lighter);
+        }
+
+        .title{
+            font-size: 26px;
+            color: $blue-dark-light;
+            position: relative;
+            top: -10px;
+            font-weight: 200;
+            text-transform: uppercase;
+            padding-left: 25px;
+            a{
+                padding: 5px 20px 25px 0;
+                display: none;
+                &:active{
+                    i{
+                        color: $blue-dark;
+                        text-shadow: 0px 0px 23px #4E6B91;
+                    }
+                }
+                i{
+                    color: $gray-light;
+                }
+            }
         }
     }
 
@@ -143,7 +182,6 @@ article img {
         .nav{
             list-style-type: none;
             padding: 0;
-            // font-size: 18px;
             margin: 20px 0;
             li{
                 border-left: 2px solid transparent;
@@ -220,7 +258,8 @@ article img {
             }
         }
         padding: 5px 25px;
-        margin: $gutter;
+        margin: 30px $gutter;
+        z-index: 1;
         background: white;
         @include border-radius(4px);
         @include box-shadow( 2px, 0, 0, rgba(210,211,212,.75) );
