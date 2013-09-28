@@ -14,6 +14,8 @@ a{
     &:hover{}
 }
 
+i{ white-space: pre-line; }
+
 p{ font-weight: normal }
 
 hr{
@@ -139,7 +141,7 @@ article img {
             top: -10px;
             font-weight: 200;
             text-transform: uppercase;
-            padding-left: 25px;
+
             a{
                 padding: 5px 20px 25px 0;
                 display: none;
@@ -276,6 +278,12 @@ article img {
         }
     }
 
+    .meta{
+        i{
+            display: inline-block
+        }
+    }
+
 /*
   ==========================================================================
     Modal Viewer
@@ -299,7 +307,7 @@ article img {
     .md-content{
         margin: 40px auto;
         position: relative;
-        width: 80%;
+        width: 90%;
         border: 10px solid rgba(255, 255, 255, 0.1);
         z-index: 147;
         display: none;
@@ -360,6 +368,29 @@ article img {
             opacity: 1;
         }
     }
+
+
+/*
+  ==========================================================================
+   Embeds
+  ==========================================================================
+*/
+.embed {
+    position: relative; padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    height: auto;
+
+    iframe, object, embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
 
 
 /*

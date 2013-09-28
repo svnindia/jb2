@@ -14,7 +14,7 @@
     "mongoskin": "~0.6.0",
     "moment": "~2.2.1"
   },
-  "version": "0.0.1-13",
+  "version": "0.0.1-15",
   "engines": {
     "node": "0.10.x"
   },
