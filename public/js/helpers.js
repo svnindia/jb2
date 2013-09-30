@@ -7,6 +7,14 @@ App.Helpers = {
       this.page.title      = config.title;
     },
 
+    forceRedraw: function(obj) {
+      obj.hide();
+      obj.each(function() {
+          this.offsetHeight;
+      });
+      obj.show();
+    },
+
     initDisqus: function (config) {
       this.disqus_config.params = config;
 

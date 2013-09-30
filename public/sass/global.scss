@@ -89,15 +89,15 @@ article img {
 
     $lighten-amount: 4%;
 
-    &.green{
+    &.tips{
         background-color: $flat-green;
         &:hover{ background-color: lighten($flat-green, $lighten-amount) }
     }
-    &.blue{
+    &.tutorials{
         background-color: $flat-blue;
         &:hover{ background-color: lighten($flat-blue, $lighten-amount) }
     }
-    &.orange{
+    &.personal{
         background-color: $flat-orange;
         &:hover{ background-color: lighten($flat-orange, $lighten-amount) }
     }
@@ -118,10 +118,6 @@ article img {
         padding: 20px $gutter 20px $gutter;
         background-color: white;
         @include box-shadow( 1px, 0, 0, rgba(210,211,212,.25) );
-        span{
-            color: $gray-lighter;
-        }
-
 
         .search{
             position: relative;
@@ -188,7 +184,6 @@ article img {
             li{
                 border-left: 2px solid transparent;
                 &:hover,&.active{
-                    border-left: 2px solid $text-secondary;
                     background-color: #2e3136;
                     a{
                         i{
@@ -196,6 +191,10 @@ article img {
                         }
                     }
                 }
+                &.all:hover,&.all.active{ border-left: 2px solid $tag-all }
+                &.tips:hover,&.tips.active{ border-left: 2px solid $tag-tips }
+                &.tutorials:hover,&.tutorials.active{ border-left: 2px solid $tag-tutorials }
+                &.personal:hover,&.personal.active{ border-left: 2px solid $tag-personal }
             }
             a{
                 color: $gray-light;
@@ -205,7 +204,10 @@ article img {
                 margin-left: 10px;
                 padding: 10px 0;
                 i{
+                    width: 14px;
                     margin-right: 20px;
+                    display: inline-block;
+                    text-align: center;
                 }
             }
         }
@@ -303,6 +305,23 @@ article img {
 
     }
 
+    // X button
+    .md-overlay-x{
+        visibility: hidden;
+        position: fixed;
+        top: 0;
+        right: 0;
+        padding: 3px 10px 5px 10px;
+        color: hsla(0, 100%, 100%, 0.65);
+        font-weight: 200;
+        font-size: 31px;
+        z-index: 10000;
+        &:hover{
+            cursor: pointer;
+            color: #FFF;
+        }
+    }
+
     // Content
     .md-content{
         margin: 40px auto;
@@ -322,7 +341,6 @@ article img {
         padding-bottom: 15px;
 
         .info{
-            border-left: 3px solid $flat-green;
             border-bottom: 1px solid $gray-lighter;
             padding: 5px 20px;
             h1{ margin: 0}
@@ -331,6 +349,10 @@ article img {
                 i{ margin: 0 10px 0 25px }
                 i:first-child{ margin-left: 0 }
             }
+            &.all{ border-left: 2px solid $tag-all }
+            &.tips{ border-left: 2px solid $tag-tips }
+            &.tutorials{ border-left: 2px solid $tag-tutorials }
+            &.personal{ border-left: 2px solid $tag-personal }
         }
 
         .full{
@@ -347,19 +369,8 @@ article img {
         z-index: 0;
     }
 
-    body .md-overlay{
-        span{
-            position: absolute;
-            top: 7px;
-            right: 12px;
-            color: hsla(0, 100%, 100%, 0.65);
-            font-weight: 200;
-            font-size: 31px;
-            &:hover{
-                cursor: pointer;
-                color: #FFF;
-            }
-        }
+    body.md-mode .md-overlay-x{
+        visibility: visible;
     }
 
     body.md-mode{
@@ -391,7 +402,6 @@ article img {
         height: 100%;
     }
 }
-
 
 /*
   ==========================================================================

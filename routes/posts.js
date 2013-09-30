@@ -20,9 +20,16 @@ exports.list = function(req, res){
 
     // Fields
     var fields = {};
+
+    // Search
     if(req.query.search){
         var q = new RegExp('.*' + req.query.search +'.*', 'i');
         fields.$or = [ { content: q }, { title: q } ];
+    }
+
+    // Tag Search
+    if(req.query.tag){
+        fields = { tags: req.query.tag };
     }
 
     db.findItems(fields, options, function(err, posts){

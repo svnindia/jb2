@@ -23,6 +23,7 @@ var BB = Backbone;
         routes : {
             '': 'index',
             'open/:alias': 'open',
+            'tag/:tag':'tagSearch',
             '*default': 'default'
         },
 
@@ -32,6 +33,10 @@ var BB = Backbone;
 
         open : function(alias) {
             eve.trigger('post:open', alias);
+        },
+
+        tagSearch : function(tag){
+            eve.trigger('tag:search', tag);
         },
 
         default : function(){
@@ -91,11 +96,11 @@ var BB = Backbone;
             this.collection.on('add', this.addOne, this);
             this.collection.on('search:success', this.render, this);
 
-            // Listen for scroll events on body
-            this.bindEvents();
+            this.bindEvents(); // Listen for scroll events on body
 
             // Listen for search submit
             $('.searchForm').on('submit', function(e){ that.onSearch(e, this); });
+
         },
 
         onScroll: function(){
@@ -163,6 +168,8 @@ var BB = Backbone;
             this.collection.each(function(post){
                 this.addOne(post);
             }, this);
+
+            $(window).scrollTop(0);
             return this;
         }
 
@@ -244,7 +251,10 @@ var BB = Backbone;
         el: '.md-overlay',
         events : {
             'click': 'close',
-            'click .x-button' : 'close'
+        },
+
+        initialize: function(){
+            $('.md-overlay-x').on('click', this.close);
         },
 
         close : function(){
@@ -260,8 +270,22 @@ var BB = Backbone;
     */
     App.Views.Sidebar = BB.View.extend({
         el: '#sidebar',
-        events: {
 
+        events: {
+            'click .nav a': 'onItemClick'
+        },
+
+        initialize: function(){
+            this.showActiveState();
+            this.on('nav:active', this.showActiveState);
+        },
+
+        onItemClick: function(e){
+            var tag = $(e.currentTarget).attr('data-tag');
+            if(tag == 'all') return;
+            App.Router.Main.navigate('tag/' + tag, {trigger: true});
+
+            e && e.preventDefault();
         },
 
         show: function(){
@@ -270,13 +294,31 @@ var BB = Backbone;
 
         hide: function(){
             $('.container').removeClass("showSidebar");
+        },
+
+        showActiveState: function(tag){
+            if(!tag) tag = 'all';
+
+            // Show active nav item
+            this.$el.find('.active').removeClass('active');
+            this.$el.find('.' + tag).addClass('active');
         }
     });
 
+    /*
+      ==========================================================================
+        View Reference: Header
+      ==========================================================================
+    */
     App.Views.Header = BB.View.extend({
         el: 'header',
         events: {
             'click .sidebar-btn': 'toggleSidebar'
+        },
+
+        updateTitleText: function(val){
+            this.$el.find('.text').text(' :: ' + val );
+            App.Helpers.forceRedraw(this.$el.find('.text')); // ow well! :-/
         },
 
         toggleSidebar: function(e){
@@ -320,7 +362,6 @@ var BB = Backbone;
           ==========================================================================
         */
         eve.on('post:home', function(){
-            // posts.fetch();
             eve.trigger('modal:close');
         });
 
@@ -371,6 +412,22 @@ var BB = Backbone;
             $('body').removeClass('md-mode');
             $(window).scrollTop(App.Behavior.scrollCache);
             App.Views.posts.bindEvents();
+        });
+
+        eve.on('tag:search', function(tag){
+            NProgress.start();
+            App.Collections.posts.fetch({
+                data: {tag: tag},
+                success: function(collection, response){
+                    App.Collections.posts.trigger('search:success');
+                    App.Views.posts.onEnd(); // Disable infinite scroll
+
+                    // Show active state:
+                    App.Views.sidebar.trigger('nav:active', tag);
+                    App.Views.header.updateTitleText(tag);
+                    NProgress.done();
+                }
+            });
         });
 
         // Init Router

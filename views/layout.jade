@@ -16,22 +16,22 @@ html
 
             //- Navigation Menu
             ul.nav.clear
-                li
-                    a(href="/")
+                li.all
+                    a(href="/", data-tag="all")
                         i.icon-home
                         | All
-                li.active
-                    a(href="#")
-                        i.icon-briefcase
-                        | Quick Tips
-                li
-                    a(href="#")
-                        i.icon-envelope
+                li.tips
+                    a(href="#", data-tag="tips")
+                        i.icon-lightbulb
+                        | Tips
+                li.tutorials
+                    a(href="#", data-tag="tutorials")
+                        i.icon-question-sign
                         | Tutorials
-                li
-                    a(href="#")
-                        i.icon-envelope
-                        | Other Crap
+                li.personal
+                    a(href="#", data-tag="personal")
+                        i.icon-male
+                        | Personal
             //- Recent Comments Secion
             h3 Recent Comments
             div.comments.small
@@ -52,6 +52,7 @@ html
                         a(href="#").sidebar-btn
                             i.icon-reorder
                         | Blog
+                        span.text
                     //- form.searchForm
                     //-     input(placeholder="Search for it...").search.pull-right  Search input
             //- Content container
@@ -63,7 +64,7 @@ html
     //- Modal Structure
     .md-content.animate
     .md-overlay.animate
-        span.x-button X
+    span.md-overlay-x X
 
     //- BB Template: Post
     script(type="text/template", id="articleTemplate")
@@ -73,18 +74,18 @@ html
             i.icon-eye-open     <%= views %> visits
             i.icon-comments     12 comments
             i.icon-time     <%= created %>
-            i.icon-tags     tutorial, tips, personal
-            a.button.blue.pull-right(href="#", data-alias!="<%= alias %>") open
+            i.icon-tags     <%= tags %>
+            a.button.pull-right(class!="<%= tags %>",href="#", data-alias!="<%= alias %>") open
 
     //- BB Template: Post Modal
     script(type="text/template", id="postModalTemplate")
-        .info.full
+        .info.full(class!="<%= tags %>")
             h1.title <%= title %>
             .meta
                 i.icon-eye-open     <%= views %> visits
                 i.icon-comments     12 comments
                 i.icon-time     <%= created %>
-                i.icon-tags     tutorial, tips, personal
+                i.icon-tags     <%= tags %>
         .content
             <%= content %>
         hr.full

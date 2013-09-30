@@ -246,6 +246,9 @@ table {
 /* green */
 /* blue */
 /* ==========================================================================
+   Tag Colors
+   ========================================================================== */
+/* ==========================================================================
    Global Dimensions
    ========================================================================== */
 /*!
@@ -2384,22 +2387,22 @@ article img {
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
-.button.green {
+.button.tips {
   background-color: #16a085;
 }
-.button.green:hover {
+.button.tips:hover {
   background-color: #18b294;
 }
-.button.blue {
+.button.tutorials {
   background-color: #2980b9;
 }
-.button.blue:hover {
+.button.tutorials:hover {
   background-color: #2d8cca;
 }
-.button.orange {
+.button.personal {
   background-color: #e74c3c;
 }
-.button.orange:hover {
+.button.personal:hover {
   background-color: #e95d4e;
 }
 
@@ -2416,9 +2419,6 @@ header {
   -webkit-box-shadow: 0 1px 0 rgba(210, 211, 212, 0.25);
   -moz-box-shadow: 0 1px 0 rgba(210, 211, 212, 0.25);
   box-shadow: 0 1px 0 rgba(210, 211, 212, 0.25);
-}
-header span {
-  color: #eeeeee;
 }
 header .search {
   position: relative;
@@ -2498,11 +2498,22 @@ header .title a i {
   border-left: 2px solid transparent;
 }
 #sidebar .nav li:hover, #sidebar .nav li.active {
-  border-left: 2px solid #16a085;
   background-color: #2e3136;
 }
 #sidebar .nav li:hover a i, #sidebar .nav li.active a i {
   color: #eeeeee;
+}
+#sidebar .nav li.all:hover, #sidebar .nav li.all.active {
+  border-left: 2px solid #999999;
+}
+#sidebar .nav li.tips:hover, #sidebar .nav li.tips.active {
+  border-left: 2px solid #16a085;
+}
+#sidebar .nav li.tutorials:hover, #sidebar .nav li.tutorials.active {
+  border-left: 2px solid #2980b9;
+}
+#sidebar .nav li.personal:hover, #sidebar .nav li.personal.active {
+  border-left: 2px solid #e74c3c;
 }
 #sidebar .nav a {
   color: #999999;
@@ -2513,7 +2524,10 @@ header .title a i {
   padding: 10px 0;
 }
 #sidebar .nav a i {
+  width: 14px;
   margin-right: 20px;
+  display: inline-block;
+  text-align: center;
 }
 #sidebar .comments {
   padding: 5px 10px;
@@ -2605,6 +2619,22 @@ header .title a i {
   opacity: 0;
 }
 
+.md-overlay-x {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 3px 10px 5px 10px;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 200;
+  font-size: 31px;
+  z-index: 10000;
+}
+.md-overlay-x:hover {
+  cursor: pointer;
+  color: #FFF;
+}
+
 .md-content {
   margin: 40px auto;
   position: relative;
@@ -2621,7 +2651,6 @@ header .title a i {
   padding-bottom: 15px;
 }
 .md-content article .info {
-  border-left: 3px solid #16a085;
   border-bottom: 1px solid #eeeeee;
   padding: 5px 20px;
 }
@@ -2636,6 +2665,18 @@ header .title a i {
 }
 .md-content article .info .meta i:first-child {
   margin-left: 0;
+}
+.md-content article .info.all {
+  border-left: 2px solid #999999;
+}
+.md-content article .info.tips {
+  border-left: 2px solid #16a085;
+}
+.md-content article .info.tutorials {
+  border-left: 2px solid #2980b9;
+}
+.md-content article .info.personal {
+  border-left: 2px solid #e74c3c;
 }
 .md-content article .full {
   margin: 0 -25px;
@@ -2653,17 +2694,8 @@ body.md-mode .container {
   z-index: 0;
 }
 
-body .md-overlay span {
-  position: absolute;
-  top: 7px;
-  right: 12px;
-  color: rgba(255, 255, 255, 0.65);
-  font-weight: 200;
-  font-size: 31px;
-}
-body .md-overlay span:hover {
-  cursor: pointer;
-  color: #FFF;
+body.md-mode .md-overlay-x {
+  visibility: visible;
 }
 
 body.md-mode .md-overlay {
