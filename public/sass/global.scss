@@ -89,6 +89,10 @@ article img {
 
     $lighten-amount: 4%;
 
+    // Default Color
+    background-color: $flat-blue;
+    &:hover{ background-color: lighten($flat-blue, $lighten-amount) }
+
     &.tips{
         background-color: $flat-green;
         &:hover{ background-color: lighten($flat-green, $lighten-amount) }
@@ -275,7 +279,14 @@ article img {
             padding: 15px 25px;
             border-top: 1px solid $gray-lighter;
             margin-top: 20px;
-            i{ margin: 0 10px 0 25px }
+            i{
+                margin: 0 10px 0 25px;
+                a{
+                    display: inline;
+                    padding-left: 5px;
+                    color: $gray-light;
+                }
+            }
             i:first-child{ margin-left: 0 }
         }
     }
@@ -324,6 +335,7 @@ article img {
 
     // Content
     .md-content{
+        max-width: 1000px;
         margin: 40px auto;
         position: relative;
         width: 90%;
@@ -346,7 +358,14 @@ article img {
             h1{ margin: 0}
             .meta{
                 color: $gray-light;
-                i{ margin: 0 10px 0 25px }
+                i{
+                    margin: 0 10px 0 25px;
+                    a{
+                        display: inline;
+                        padding-left: 5px;
+                        color: $gray-light;
+                    }
+                }
                 i:first-child{ margin-left: 0 }
             }
             &.all{ border-left: 2px solid $tag-all }

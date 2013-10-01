@@ -1,0 +1,51 @@
+<p>This is just a quick video tutorial on the basics of using <a href="http://www.daneden.me/animate">Animate.css</a> to quickly add some amazing animation effects with little to no effor at all! Then I will go over a few tips on how you can use a little bit of jQuery to really expand it's functionality by making animations hapen when you hover or click on a DOM element.</p>
+
+<p><b>Credits to Style Sheet Creator:</b> <a href="http://www.daneden.me/">Daniel Eden</a><br>
+<a href="https://github.com/daneden/animate.css">GitHub Repository</a></p>
+
+<div class="embed vid">
+    <iframe frameborder="0" src="http://www.youtube.com/embed/RuhPekX3wsQ"></iframe>
+</div>
+
+<h1>Animate on Hover function</h1>
+<pre data-gclp-id="1" data-initialized="true">
+<code><span class="pln">
+    </span><span class="kwd">function</span><span class="pln"> animationHover</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> animation</span><span class="pun">){</span><span class="pln">
+      element </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="pln">element</span><span class="pun">);</span><span class="pln">
+      element</span><span class="pun">.</span><span class="pln">hover</span><span class="pun">(</span><span class="pln">
+          </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+              element</span><span class="pun">.</span><span class="pln">addClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
+          </span><span class="pun">},</span><span class="pln">
+          </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+              </span><span class="com">//wait for animation to finish before removing classes</span><span class="pln">
+              window</span><span class="pun">.</span><span class="pln">setTimeout</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+                  element</span><span class="pun">.</span><span class="pln">removeClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
+              </span><span class="pun">},</span><span class="pln"> </span><span class="lit">2000</span><span class="pun">);</span><span class="pln">
+          </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span></code>
+</pre>
+
+<h1>Animate on Click function</h1>
+<pre data-gclp-id="2" data-initialized="true">
+<code><span class="pln">
+    </span><span class="kwd">function</span><span class="pln"> animationClick</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> animation</span><span class="pun">){</span><span class="pln">
+      element </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="pln">element</span><span class="pun">);</span><span class="pln">
+      element</span><span class="pun">.</span><span class="pln">click</span><span class="pun">(</span><span class="pln">
+          </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+              element</span><span class="pun">.</span><span class="pln">addClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
+              </span><span class="com">//wait for animation to finish before removing classes</span><span class="pln">
+              window</span><span class="pun">.</span><span class="pln">setTimeout</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+                  element</span><span class="pun">.</span><span class="pln">removeClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
+              </span><span class="pun">},</span><span class="pln"> </span><span class="lit">2000</span><span class="pun">);</span><span class="pln">
+
+          </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span></code>
+</pre>
+
+<p>Good luck!</p>
+
+<h1>Update:</h1>
+
+<p><a href="http://jsfiddle.net/hunabku/6J27S/1/">Better functions</a> - which allow you to have a separate trigger element. (ex: hover or click logo animates sloganText) Credits to Kersten for sending this.</p>

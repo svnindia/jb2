@@ -6,6 +6,9 @@ pre {
     white-space: pre;
   }
 }
+code{
+    margin-bottom: -25px;
+}
 pre code{
   font-family: 'Monaco', 'Menlo', monospace;
   background-color: $blue-dark-light;

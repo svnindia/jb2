@@ -1,0 +1,58 @@
+<p>Disqus is one of the best and simplest ways to comments to your site. Adding Disqus to Modx Revolution is really simple. Here are the steps:</p>
+
+<h2>Step 1: Sign-Up</h2>
+
+<p>If you haven't done so already visit <a href="http://www.disqus.com" target="_blank">www.disqus.com</a> and create an account.</p>
+
+<img alt="Create a Disqus account" src="images/blog/04-disqus/signup.jpg">
+
+<h2>Step 2: Register Site</h2>
+
+<p>Now that your created an account we need to register your site. This is how Disqus identifies your site. During registration remember the "Site Shortname" because will will use it in the next step.</p>
+
+<img alt="Register your website." src="images/blog/04-disqus/register.jpg">
+
+<h2>Step 3: Install</h2>
+
+<p>To install Disquss all we have to do is paste the embedd code where we want it to appear. The modx way to do this is as follows:</p>
+
+<p>Create a chunk labeled "disqus" and copy the <a href="http://docs.disqus.com/developers/universal/">Universal Embed Code from here</a></p>
+
+<p>Replace example text with the shortname you created when you registered your site then place the chunk where ever you want it to appear in your template. (ex. right after a document article</p><br>
+
+<img alt="Create Chunk" src="images/blog/04-disqus/chunk.jpg">
+
+<h2>Step 4: Disqus Identifier</h2>
+
+<p>This step is optional but highly recommended. The Disqus identifier is a unique string used to identify which comment thread belongs to which page. If you dont specify a identifier Disqus will create what's called a "thread ID" by default.</p>
+
+<p>The problem with using a thread id is that if you load multiple pages from the same URL then each page will have the same ID. Also if you where to change the URL for any reason (ex. adding friendly URLs) the link to that resource will be lost. Adding an identifier also makes displaying counts easier.</p>
+
+<p>To add a disqus identifier in Modx Revolution is really simple. Just add the "discus_identifier" variable anywhere before your Disqus call script (i prefer to add it in the HTML HEAD). You may use any unique string or number in your variable. I decided to go with the document ID system variable because it's guaranteed to always be unique.</p>
+
+<p>Place the code below in between the head tag in your template.</p>
+
+<pre class="prettyprint lang-html prettyprinted" ><code><span class="pln">
+</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="tag">&gt;</span><br><span class="pln">    </span><span class="kwd">var</span><span class="pln"> disqus_identifier </span><span class="pun">=</span><span class="pln"> </span><span class="str">'[[*id]]'</span><span class="pun">;</span><br><span class="tag">&lt;/script&gt;</span><span class="pln">
+  </span></code>
+</pre>
+
+<h2>Optional: Display Counts</h2>
+
+<p>Most people would want to display a count of how many comments have been made to a particular article. Disqus also makes this really easy.</p>
+
+<p>Place the <a href="http://docs.disqus.com/developers/universal/" target="_blank">comment code</a> below right before the closing body tag:</p>
+
+<pre class="prettyprint lang-html prettyprinted"><code><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="tag">&gt;</span><br><span class="pln">        </span><span class="com">/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */</span><br><span class="pln">        </span><span class="kwd">var</span><span class="pln"> disqus_shortname </span><span class="pun">=</span><span class="pln"> </span><span class="str">'example'</span><span class="pun">;</span><span class="pln"> </span><span class="com">// required: replace example with your forum shortname</span><br><br><span class="pln">        </span><span class="com">/* * * DON'T EDIT BELOW THIS LINE * * */</span><br><span class="pln">        </span><span class="pun">(</span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><br><span class="pln">            </span><span class="kwd">var</span><span class="pln"> s </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'script'</span><span class="pun">);</span><span class="pln"> s</span><span class="pun">.</span><span class="pln">async </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><br><span class="pln">            s</span><span class="pun">.</span><span class="pln">type </span><span class="pun">=</span><span class="pln"> </span><span class="str">'text/javascript'</span><span class="pun">;</span><br><span class="pln">            s</span><span class="pun">.</span><span class="pln">src </span><span class="pun">=</span><span class="pln"> </span><span class="str">'http://'</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> disqus_shortname </span><span class="pun">+</span><span class="pln"> </span><span class="str">'.disqus.com/count.js'</span><span class="pun">;</span><br><span class="pln">            </span><span class="pun">(</span><span class="pln">document</span><span class="pun">.</span><span class="pln">getElementsByTagName</span><span class="pun">(</span><span class="str">'HEAD'</span><span class="pun">)[</span><span class="lit">0</span><span class="pun">]</span><span class="pln"> </span><span class="pun">||</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementsByTagName</span><span class="pun">(</span><span class="str">'BODY'</span><span class="pun">)[</span><span class="lit">0</span><span class="pun">]).</span><span class="pln">appendChild</span><span class="pun">(</span><span class="pln">s</span><span class="pun">);</span><br><span class="pln">        </span><span class="pun">}());</span><br><span class="pln">    </span><span class="tag">&lt;/script&gt;</span><span class="pln">
+  </span></code>
+</pre>
+
+<p>Then add the following code to the home page</p>
+
+<pre class="prettyprint" ><code><span class="pln">
+    </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#disqus_thread"</span><span class="tag">&gt;</span><span class="pln">0 Comments</span><span class="tag">&lt;/a&gt;</span><span class="pln">
+  </span></code>
+</pre>
+
+<h2>All done!!!!</h2>

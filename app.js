@@ -16,7 +16,6 @@ var db = mongo.db( config.db.url, {safe: false} ).collection('posts');
 
 
 var app = express();
-
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
@@ -33,6 +32,16 @@ app.configure(function(){
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
+
+// Handle redirects
+for (var i = 0; i < config.redirects.length; i++) {
+  (function(index){
+    app.get(config.redirects[index].old, function(req, res){
+      res.redirect(301, config.redirects[index].new);
+    });
+  }(i));
+}
+
 
 // Routes
 app.get('/', routes.index);

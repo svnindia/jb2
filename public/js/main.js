@@ -95,6 +95,7 @@ var BB = Backbone;
             this.collection.on('reset', this.render, this);
             this.collection.on('add', this.addOne, this);
             this.collection.on('search:success', this.render, this);
+            this.collection.on('reset sync', App.Helpers.initDisqusCount);
 
             this.bindEvents(); // Listen for scroll events on body
 
@@ -169,7 +170,7 @@ var BB = Backbone;
                 this.addOne(post);
             }, this);
 
-            $(window).scrollTop(0);
+            $(window).scrollTop(0); /* sometimes browser "forgets" smh */
             return this;
         }
 
@@ -227,18 +228,34 @@ var BB = Backbone;
 
         template : App.template('postModalTemplate'),
 
+        initialize: function(){
+            _.bindAll(this, 'onScroll');
+            this.bindEvents();
+        },
+
+        bindEvents: function(){ $(window).on('scroll.modalReader', this.onScroll); },
+        unbindEvents: function(){ $(window).off('scroll.modalReader'); },
+
+        onScroll: function(){
+            if( $('hr.endRuler').isOnScreen() ){
+                this.unbindEvents();
+                this.renderDisqus();
+            }
+        },
+
         render: function(){
             this.$el.html( $('<' + this.tagName + '>').append(this.template( this.model.toJSON() ) ) );
             eve.trigger('modal:show');
+        },
 
-            // Add Disqus
+        renderDisqus: function(){
             var config = {
                 identifier: this.model.get('disqusId') || this.model.get('alias'),
                 title: this.model.get('title'),
                 url: location.href
             };
 
-           enableDisqus(config);
+            App.Helpers.initDisqus(config);
         }
     });
 
@@ -284,6 +301,7 @@ var BB = Backbone;
             var tag = $(e.currentTarget).attr('data-tag');
             if(tag == 'all') return;
             App.Router.Main.navigate('tag/' + tag, {trigger: true});
+            this.hide();
 
             e && e.preventDefault();
         },
@@ -398,18 +416,23 @@ var BB = Backbone;
                 $(window).scrollTop(0);
 
                 // Container for Modal Element
-                var modalView = new App.Views.Modal({model: post});
-                modalView.render();
+                App.Views.modal = new App.Views.Modal({model: post});
+                App.Views.modal.render();
             }
 
         });
 
         eve.on('modal:show', function(){
             $('body').addClass('md-mode');
+            App.Views.modal.onScroll(); // Check if Comments already visible
+            App.Helpers.initDisqusCount();
         });
 
         eve.on('modal:close', function(){
-            $('body').removeClass('md-mode');
+            if( $('body').hasClass('md-mode') ){
+                App.Views.modal.unbindEvents();
+                $('body').removeClass('md-mode');
+            }
             $(window).scrollTop(App.Behavior.scrollCache);
             App.Views.posts.bindEvents();
         });
