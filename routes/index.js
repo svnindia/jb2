@@ -9,7 +9,7 @@ var db = mongo.db( config.db.url, {safe: false} ).collection('posts');
 exports.index = function(req, res){
     var options = {
       'sort'  : { created: -1 },
-      'limit' : config.qty,
+      'limit' : config.db.qty,
 
     };
     db.find({}, options).toArray(function(err, initData){
@@ -18,7 +18,8 @@ exports.index = function(req, res){
             initData[i].created = moment(initData[i].created).fromNow();
         }
         req.app.locals.initData = initData;
-        res.render('layout', { title: 'Express' });
+        req.app.locals.app = req.app;
+        res.render('layout', { enviroment: config.env });
 
     });
 

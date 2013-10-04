@@ -65,21 +65,35 @@ article img {
     }
 }
 
-.animate {
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  -o-transform: translateZ(0);
-  transform: translateZ(0);
+// Sharrre
+.sharrre{
+    margin: 20px 0;
+    .button{
+        float:left;
+        width:60px;
+    }
 
-  -moz-transition: all .2s ease-out;
-  -webkit-transition: all .2s ease-out;
-  -o-transition: all .2s ease-out;
-  transition: all .2s ease-out;
+    .box{
+        float: left;
+        padding: 0 15px 0 0;
+        margin: 0 15px 0 0;
+        border-right: 3px solid $blue-dark;
+        a{
+            color: $blue-dark;
+            font-size: 40px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    }
+
 }
 
+// Disqus Container
+#disqus_thread{
+    margin-top: 25px;
+}
 // Button
-.button{
+.btn{
     color: white;
     padding: 2px 20px;
     line-height: 20px;
@@ -143,7 +157,8 @@ article img {
             text-transform: uppercase;
 
             a{
-                padding: 5px 20px 25px 0;
+                padding: 5px 20px 25px 20px;
+                margin-left: -20px;
                 display: none;
                 &:active{
                     i{
@@ -249,6 +264,14 @@ article img {
             width: 100%;
             font-size: x-small;
         }
+        >p{
+            font-size: 80%;
+            padding: 0 10px;
+        }
+        // Twitter follow button
+        .twitter-follow-button{
+            padding: 0 0 0 11px;
+        }
     }
 
 /*
@@ -257,6 +280,7 @@ article img {
   ==========================================================================
 */
     .content article{
+        visibility: hidden;
         .title{
             font-weight: 400;
             color: $blue-dark-light;
@@ -289,6 +313,23 @@ article img {
             }
             i:first-child{ margin-left: 0 }
         }
+
+        &.in {
+            visibility: visible !important;
+            @include translateY(150px);
+            -webkit-animation: in 0.8s ease forwards;
+            -moz-animation: in 0.8s ease forwards;
+            animation: in 0.8s ease forwards;
+
+        }
+
+        &.already-in {
+            visibility: visible !important;
+            @include translateY(0);
+            -webkit-animation: none;
+            -moz-animation: none;
+            animation: none;
+        }
     }
 
     .meta{
@@ -297,6 +338,39 @@ article img {
         }
     }
 
+    .endCollection{
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        margin: 0 auto 20px;
+        text-align: center;
+        display: block;
+        font-weight: 200;
+
+        .sadText{
+            font-weight: 200;
+        }
+
+        a{
+            color: $flat-blue;
+            font-size: 24px;
+            padding: 0 17px 0;
+            text-decoration: none;
+            &:hover{
+                i { color: lighten($flat-blue, 10%) }
+            }
+        }
+    }
+
+    .animate {
+        @include translateZ(0);
+        @include transition( all, .2s, ease-out );
+    }
+
+    @include keyframes( in ){
+        to { @include translateY(0); }
+    }
 /*
   ==========================================================================
     Modal Viewer
@@ -311,7 +385,7 @@ article img {
         width: 100%;
         height: 100%;
         z-index: 100;
-        background-color: rgba(32, 40, 49, 0.86);
+        background-color: rgba(32, 40, 49, 0.9);
         opacity: 0;
 
     }
@@ -324,6 +398,7 @@ article img {
         right: 0;
         padding: 3px 10px 5px 10px;
         color: hsla(0, 100%, 100%, 0.65);
+        text-shadow: 0px 0px 8px rgba(58, 56, 56, 0.45);;
         font-weight: 200;
         font-size: 31px;
         z-index: 10000;
@@ -384,7 +459,7 @@ article img {
     body.md-mode .md-content{ display: block }
     body.md-mode .container{
         position: fixed;
-        @include blur(3px);
+        // @include blur(3px);
         z-index: 0;
     }
 
@@ -422,6 +497,24 @@ article img {
     }
 }
 
+
+/*
+  ==========================================================================
+   nprogress overrides
+  ==========================================================================
+*/
+#nprogress .bar {
+    background: $flat-green;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px $flat-green, 0 0 5px $flat-green;
+}
+
+#nprogress .spinner-icon {
+  border-top-color:  $flat-green;
+  border-left-color: $flat-green;
+}
 /*
   ==========================================================================
    Debug Trick

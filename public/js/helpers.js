@@ -1,4 +1,8 @@
 App.Helpers = {
+    Template: function(template){
+      return _.template( $('#' + template).html() );
+    },
+
     disqus_config: function() {
       var config = this.disqus_config.params;
 
@@ -16,7 +20,7 @@ App.Helpers = {
     },
 
     initDisqusCount: function(){
-      if(this.loaded){
+      if( typeof(DISQUSWIDGETS) !== 'undefined' ){
         DISQUSWIDGETS.getCount();
       }else{
         (function () {

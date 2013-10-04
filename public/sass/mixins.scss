@@ -67,6 +67,41 @@
   transition: $transition-property $transition-time $method;
 }
 
+// TranslateZ
+@mixin translateZ($amount) {
+  -webkit-transform: translateZ($amount);
+  -moz-transform: translateZ($amount);
+  -ms-transform: translateZ($amount);
+  -o-transform: translateZ($amount);
+  transform: translateZ($amount);
+}
+
+// TranslateZ
+@mixin translateY($amount) {
+  -webkit-transform: translateY($amount);
+  -moz-transform: translateY($amount);
+  -ms-transform: translateY($amount);
+  -o-transform: translateY($amount);
+  transform: translateY($amount);
+}
+
+// Keyfram
+@mixin keyframes( $animationName )
+{
+  @-webkit-keyframes $animationName {
+      @content;
+  }
+  @-moz-keyframes $animationName {
+      @content;
+  }
+  @-o-keyframes $animationName {
+      @content;
+  }
+  @keyframes $animationName {
+      @content;
+  }
+}
+
 @mixin noselect() {
   -moz-user-select: none;
   -khtml-user-select: none;

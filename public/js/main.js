@@ -1,18 +1,7 @@
-var App = {
-    Models      : {},
-    Views       : {},
-    Collections : {},
-    Router      : {},
-    Behavior    : {}
-};
 var eve = _.extend({}, Backbone.Events);
 var BB = Backbone;
-// (function(exports, $, BB, _){
+(function(exports, $, BB, _){
     "use strict";
-
-    App.template = function(template){
-        return _.template( $('#' + template).html() );
-    };
 
     /*
       ==========================================================================
@@ -41,6 +30,17 @@ var BB = Backbone;
 
         default : function(){
             console.log('Route: Default! 404?');
+        },
+
+        track: function(){
+            var url = Backbone.history.getFragment();
+
+            // Add a slash if neccesary
+            if (!/^\//.test(url)) url = '/' + url;
+            ga('send', {
+                'hitType': 'pageview',
+                'page': url
+            });
         }
     });
 
@@ -92,10 +92,11 @@ var BB = Backbone;
         initialize: function(){
             _.bindAll( this, 'onScroll' );
             var that = this;
-            this.collection.on('reset', this.render, this);
+            this.collection.on('reset', this.onBootstrapLoaded, this);
             this.collection.on('add', this.addOne, this);
-            this.collection.on('search:success', this.render, this);
+            this.collection.on('search:success', this.onSearchSuccess, this);
             this.collection.on('reset sync', App.Helpers.initDisqusCount);
+            this.collection.on('sync', this.slideIn, this);
 
             this.bindEvents(); // Listen for scroll events on body
 
@@ -104,15 +105,45 @@ var BB = Backbone;
 
         },
 
+        onSearchSuccess: function(){
+            this.render();
+            this.slideIn();
+        },
+
         onScroll: function(){
+            if( !App.Behavior.allItemsReceived ) this.infiniteScroll();
+            this.slideIn();
+        },
+
+        bindEvents : function(){
+            if(this.collection.end) return;
+            $(window).on('scroll.collection touchmove.collection', this.onScroll );
+        },
+
+        unbindEvents : function(){ $(window).off('.collection'); },
+
+        slideIn: function(mode, response, options){
+            var isTagSearch = options && options.data.tag; /* Hacky? maybe */
+            var offScreen = this.$el.find('article:not(.in, .already-in)');
+
+            if(offScreen.length === 0 ) this.onEnd(); /* Try triggering end state */
+            offScreen.each( function(i, el){
+                var $el = $(el);
+                if( $el.isOnScreen() || isTagSearch ) $el.addClass('in');
+            });
+        },
+
+        infiniteScroll: function(){
+            // Infinite Sroll
             var that = this;
             var body = $('body');
-            var height = $('body').outerHeight() + 20;
+            var height = $('body').outerHeight();
             if(
                 !this.collection.end && /* Not at end of list */
                 !this.collection.getting && /* Not waiting for response */
-                $(window).scrollTop() + $(window).height() >= $(document).height() - 20 /* is at bottom */
-              ){
+                $(window).scrollTop() + $(window).height() >= $(document).height() - 400 /* is at bottom */
+              )
+            {
                 NProgress.start();
                 this.collection.getting = true;
                 this.collection.page += 1;
@@ -120,7 +151,7 @@ var BB = Backbone;
                     remove: false,
                     data: {page: this.collection.page},
                     success: function(collection, response){
-                        if( _.isEmpty(response) ){ that.onEnd(); }
+                        if( _.isEmpty(response) ){ App.Behavior.allItemsReceived = true; }
                         that.collection.getting = false;
                         NProgress.done();
                     }
@@ -128,14 +159,23 @@ var BB = Backbone;
             }
         },
 
-        bindEvents : function(){ $(window).on('scroll.collection', this.onScroll ); },
+        onBootstrapLoaded: function(){
+            this.render();
 
-        unbindEvents : function(){ $(window).off('scroll.collection'); },
+            // Dont slide in already visible bootstrap articles
+            this.$el.find('article').each( function(i, el){
+                var $el = $(el);
+                if( $el.isOnScreen() ) $el.addClass('already-in');
+            });
+        },
 
         onEnd : function(){
+            if(this.collection.getting) return; /* Never trigger end while fetching */
             this.collection.end = true;
-            App.Views.posts.unbindEvents();
-            // TODO: Add visual indicator of end list
+            this.unbindEvents();
+
+            this.$el.append( App.Helpers.Template('collectionEnd') );
+            ga('send', 'event', 'scrollEvents', 'Scrolled to end');
         },
 
         onSearch: function(e, form){
@@ -155,10 +195,7 @@ var BB = Backbone;
 
         addOne : function(model){
             if(!model) return;
-            if( !this.collection.contains(model) ){
 
-                this.collection.add(model);
-            }
             var postView = new App.Views.Post({ model: model });
             this.$el.append(postView.render().el);
         },
@@ -185,18 +222,19 @@ var BB = Backbone;
         tagName: 'article',
 
         events: {
-            'click a.button': 'open',
+            'click a.btn': 'open',
             'click .title'  : 'open'
         },
 
         className: 'clear',
 
-        template: App.template('articleTemplate'),
+        template: App.Helpers.Template('articleTemplate'),
 
         open: function(e){
             e && e.preventDefault();
             var alias = $(e.currentTarget).attr('data-alias');
             App.Router.Main.navigate('open/' + alias);
+            App.Router.Main.track();
             eve.trigger("post:open", alias);
 
             // Increment View Count
@@ -226,7 +264,7 @@ var BB = Backbone;
 
         el: '.md-content',
 
-        template : App.template('postModalTemplate'),
+        template : App.Helpers.Template('postModalTemplate'),
 
         initialize: function(){
             _.bindAll(this, 'onScroll');
@@ -234,9 +272,13 @@ var BB = Backbone;
         },
 
         bindEvents: function(){ $(window).on('scroll.modalReader', this.onScroll); },
-        unbindEvents: function(){ $(window).off('scroll.modalReader'); },
+        unbindEvents: function(){ $(window).off('.modalReader'); },
 
         onScroll: function(){
+            if( $('#shareme').isOnScreen() ){
+                this.renderSharrre();
+            }
+
             if( $('hr.endRuler').isOnScreen() ){
                 this.unbindEvents();
                 this.renderDisqus();
@@ -249,13 +291,41 @@ var BB = Backbone;
         },
 
         renderDisqus: function(){
+            if(App.Behavior.disqusRequestSend ) return; // Prevent multiple requests while Disqus is fetching
             var config = {
                 identifier: this.model.get('disqusId') || this.model.get('alias'),
                 title: this.model.get('title'),
                 url: location.href
             };
 
+            App.Behavior.disqusRequestSend = true;
             App.Helpers.initDisqus(config);
+        },
+
+        renderSharrre: function(){
+            $('#shareme').sharrre({
+              share: {
+                twitter: true,
+                facebook: true,
+                googlePlus: true,
+                stumbleupon: true,
+                linkedin: true,
+              },
+              buttons: {
+                googlePlus: {size: 'tall', annotation:'bubble'},
+                facebook: {layout: 'box_count'},
+                twitter: {count: 'vertical', via: 'jBHackin'},
+                stumbleupon: {layout: '5'},
+                linkedin: {counter: 'top'},
+              },
+              url: window.location.href,
+              enableCounter: true,
+              enableTracking: true,
+              render: function(api, options) {
+                    debugger;
+                    api.loadButtons();
+              }
+            });
         }
     });
 
@@ -276,7 +346,8 @@ var BB = Backbone;
 
         close : function(){
             eve.trigger('modal:close');
-            App.Router.Main.navigate('', true);
+            App.Router.Main.navigate('');
+            App.Router.Main.track();
         }
     });
 
@@ -301,6 +372,7 @@ var BB = Backbone;
             var tag = $(e.currentTarget).attr('data-tag');
             if(tag == 'all') return;
             App.Router.Main.navigate('tag/' + tag, {trigger: true});
+            App.Router.Main.track();
             this.hide();
 
             e && e.preventDefault();
@@ -411,6 +483,9 @@ var BB = Backbone;
                 // Unbind Collection Scroll Eventhandler
                 App.Views.posts.unbindEvents();
 
+                // Update title
+                eve.trigger('domchange:title', post.get('title') );
+
                 //Cache scroll location
                 App.Behavior.scrollCache = $(window).scrollTop();
                 $(window).scrollTop(0);
@@ -418,22 +493,26 @@ var BB = Backbone;
                 // Container for Modal Element
                 App.Views.modal = new App.Views.Modal({model: post});
                 App.Views.modal.render();
+
             }
 
         });
 
         eve.on('modal:show', function(){
             $('body').addClass('md-mode');
-            App.Views.modal.onScroll(); // Check if Comments already visible
             App.Helpers.initDisqusCount();
+            $(window).trigger('scroll'); // Check if Comments already visible
         });
 
         eve.on('modal:close', function(){
-            if( $('body').hasClass('md-mode') ){
-                App.Views.modal.unbindEvents();
-                $('body').removeClass('md-mode');
-            }
+            if(! $('body').hasClass('md-mode') ) return;
+
+            App.Views.modal.unbindEvents();
+            $('body').removeClass('md-mode');
+
+            App.Behavior.disqusRequestSend = false;
             $(window).scrollTop(App.Behavior.scrollCache);
+            eve.trigger('domchange:title', "Blog" );
             App.Views.posts.bindEvents();
         });
 
@@ -443,7 +522,6 @@ var BB = Backbone;
                 data: {tag: tag},
                 success: function(collection, response){
                     App.Collections.posts.trigger('search:success');
-                    App.Views.posts.onEnd(); // Disable infinite scroll
 
                     // Show active state:
                     App.Views.sidebar.trigger('nav:active', tag);
@@ -453,10 +531,13 @@ var BB = Backbone;
             });
         });
 
+        eve.on('domchange:title', function(title){
+            $(document).attr('title', title);
+        });
+
         // Init Router
         App.Router.Main = new App.Router;
-        BB.history.start();
+        BB.history.start({ pushState: true, root: App.Config.Root });
     };
 
-
-// })(this, jQuery, Backbone, _);
+})(this, jQuery, Backbone, _);

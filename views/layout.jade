@@ -1,13 +1,27 @@
 doctype 5
 html
   head
-    title= 'JB - Single Page App v2'
+    title= 'Blog - My online Playground'
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
     meta(name="viewport", content="width=device-width, height=device-height, initial-scale=1.0 user-scalable=no")
+    link(rel="icon", type="image/x-icon", href="favicon.ico")
+    link(rel="author", href="https://plus.google.com/114077659749744397502")
+    meta(name="description", content="Web Developer, MODxCMS Enthsiast, Silicon Valley, Blogger. Checkout my new blog!")
     link(rel='stylesheet', href='css/main.css')
+    // [if lt IE 9]
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    script .
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  body(ontouchstart).clear
+      ga('create', 'UA-5050117-10');
+      ga('send', 'pageview');
+
+body(ontouchstart).clear
     .container
         #sidebar.column.animate
             //- Logo Section
@@ -33,17 +47,22 @@ html
                         i.icon-male
                         | Personal
             //- Recent Comments Secion
-            h3 Recent Comments
-            div.comments.small
-                p Great tutorial.. really helped me understand this concept
-                span.text-right 6 min ago <span>by<span> John Myer
+            //- h3 Recent Comments
+            //- div.comments.small
+            //-     p Great tutorial.. really helped me understand this concept
+            //-     span.text-right 6 min ago <span>by<span> John Myer
 
-            div.comments.small
-                p Another pretty much useless comment with small words.
-                span.text-right 1 hr ago <span>by<span> Jose Browne
+            //- div.comments.small
+            //-     p Another pretty much useless comment with small words.
+            //-     span.text-right 1 hr ago <span>by<span> Jose Browne
+
+            h3 About me
+            p.small Something really inspirational about me should probably be written here. But until i'm inspired this is all you get.
+            <a href="https://twitter.com/jBhackin" class="twitter-follow-button" data-show-count="true">Follow @jBhackin</a>
+            script .
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 
             footer.clear.text-center &copy; 2013<br>Powered by Express & MongoDB
-
 
         #main.column
             header.clear.animate
@@ -76,7 +95,18 @@ html
                 a(data-disqus-identifier!="<%= typeof(disqusId) !== 'undefined' ? disqusId : alias %>") 0 Comments
             i.icon-time     <%= created %>
             i.icon-tags     <%= tags %>
-            a.button.pull-right(class!="<%= tags %>",href="#", data-alias!="<%= alias %>") open
+            a.btn.pull-right(class!="<%= tags %>",href="#", data-alias!="<%= alias %>") open
+
+    //- BB Template: End of infinite scroll
+    script(type="text/template", id="collectionEnd")
+        .endCollection
+            h5.sadText This does not have to be the end of us.
+            h3.followText Follow Me
+            p
+                a(href="https://twitter.com/jBhackin"): i.icon-twitter
+                a(href="http://www.linkedin.com/in/josebrowne"): i.icon-linkedin
+                a(href="https://plus.google.com/114077659749744397502"): i.icon-google-plus
+                a(href="https://github.com/digitalmaster"): i.icon-github
 
     //- BB Template: Post Modal
     script(type="text/template", id="postModalTemplate")
@@ -90,18 +120,24 @@ html
                 i.icon-tags     <%= tags %>
         .content
             <%= content %>
+        hr.full
+        #shareme.clear(data-text!="<%= title %>")
         hr.full.endRuler
-        h3 Sharing Stuff
         #disqus_thread
 
-    script(src='components/jquery/jquery.js')
-    script(src='components/underscore/underscore.js')
-    script(src='components/backbone/backbone.js')
-    script(src='components/nprogress/nprogress.js')
-    script(src='js/main.js')
-    script(src='js/helpers.js')
-    script(src='http://localhost:35729/livereload.js')
-
+    //- Load Scripts
+    if enviroment == 'development'
+        script(src='components/jquery/jquery.js')
+        script(src='components/underscore/underscore.js')
+        script(src='components/backbone/backbone.js')
+        script(src='components/nprogress/nprogress.js')
+        script(src='components/sharrre/jquery.sharrre.js')
+        script(src='js/namespaces.js')
+        script(src='js/helpers.js')
+        script(src='js/main.js')
+        script(src='http://localhost:35729/livereload.js')
+    else
+        script(src='js/jb2.min.js')
 
     // initialization script
     script .

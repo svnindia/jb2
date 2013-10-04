@@ -13,8 +13,8 @@ exports.list = function(req, res){
 
     // Pagination
     if(req.query.page){
-        var skip = config.qty * (req.query.page -1);
-        options.limit = config.qty;
+        var skip = config.db.qty * (req.query.page -1);
+        options.limit = config.db.qty;
         options.skip = skip;
     }
 

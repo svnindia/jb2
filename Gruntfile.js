@@ -34,17 +34,13 @@ module.exports = function (grunt) {
         options: {
           livereload: reloadPort
         },
+        tasks: ['concat']
       },
       sass: {
           files: ['<%= config.public %>/{,*/}*.{scss,sass}'],
           tasks: ['sass']
       },
-      // css: {
-      //   files: ['<%= config.public %>/css/*.css'],
-      //   options: {
-      //     livereload: reloadPort
-      //   },
-      // },
+
       jade: {
         files: ['views/*.jade'],
         options: {
@@ -62,6 +58,47 @@ module.exports = function (grunt) {
             '<%= config.public %>/css/main.css': '<%= config.public %>/sass/main.scss'
           }
         }
+    },
+
+    concat: {
+      options: {
+      },
+      dist: {
+        src: [
+          'public/components/jquery/jquery.js',
+          'public/components/underscore/underscore.js',
+          'public/components/backbone/backbone.js',
+          'public/components/nprogress/nprogress.js',
+          'public/components/sharrre/jquery.sharrre.js',
+          'public/js/namespaces.js',
+          'public/js/helpers.js',
+          'public/js/main.js',
+        ],
+        dest: 'public/js/<%= pkg.name %>.js',
+        nonull: true
+      },
+    },
+
+    uglify: {
+      options: {
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+        report: 'min'
+      },
+      build: {
+        files: {
+          'public/js/<%= pkg.name %>.min.js' : ['public/js/<%= pkg.name %>.js']
+        }
+      }
+    },
+    autoprefixer: {
+      options: {},
+      single_file: {
+        options: {
+          // Target-specific options go here.
+        },
+        src: 'public/css/main.css',
+        dest: 'public/css/main.css'
+      }
     }
   });
 
@@ -88,5 +125,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.registerTask('default', ['develop', 'watch']);
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-autoprefixer');
+
+  grunt.registerTask('default', ['develop', 'concat', 'autoprefixer', 'uglify', 'watch']);
+  grunt.registerTask('debug', ['develop', 'concat','autoprefixer', 'watch']);
 };
