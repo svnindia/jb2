@@ -16,7 +16,10 @@ a{
 
 i{ white-space: pre-line; }
 
-p{ font-weight: normal }
+p{
+    font-weight: normal;
+    line-height: 1.64;
+}
 
 hr{
     border: 0;
@@ -201,19 +204,17 @@ article img {
             padding: 0;
             margin: 20px 0;
             li{
-                border-left: 2px solid transparent;
+                &.all{ border-left: 2px solid $tag-all }
+                &.tips{ border-left: 2px solid $tag-tips }
+                &.tutorials{ border-left: 2px solid $tag-tutorials }
+                &.personal{ border-left: 2px solid $tag-personal }
+
                 &:hover,&.active{
                     background-color: #2e3136;
                     a{
-                        i{
-                            color: $gray-lighter;
-                        }
+                        color: $gray-lighter;
                     }
                 }
-                &.all:hover,&.all.active{ border-left: 2px solid $tag-all }
-                &.tips:hover,&.tips.active{ border-left: 2px solid $tag-tips }
-                &.tutorials:hover,&.tutorials.active{ border-left: 2px solid $tag-tutorials }
-                &.personal:hover,&.personal.active{ border-left: 2px solid $tag-personal }
             }
             a{
                 color: $gray-light;
@@ -281,6 +282,12 @@ article img {
 */
     .content article{
         visibility: hidden;
+        padding: 5px 25px;
+        margin: 30px $gutter;
+        z-index: 1;
+        background: white;
+        @include border-radius(4px);
+        @include box-shadow( 2px, 0, 0, rgba(210,211,212,.75) );
         .title{
             font-weight: 400;
             color: $blue-dark-light;
@@ -289,52 +296,42 @@ article img {
               cursor: pointer;
             }
         }
-        padding: 5px 25px;
-        margin: 30px $gutter;
-        z-index: 1;
-        background: white;
-        @include border-radius(4px);
-        @include box-shadow( 2px, 0, 0, rgba(210,211,212,.75) );
-
-        .meta{
+        .footer{
             font-size: 95%;
             margin: 0 -25px;
             color: $gray-light;
             padding: 15px 25px;
             border-top: 1px solid $gray-lighter;
             margin-top: 20px;
-            i{
-                margin: 0 10px 0 25px;
+
+            .meta{
+                > span{
+                    margin-right: 20px;
+                    display: inline-block;
+                }
+
+                i{
+                    margin: 0 10px 0 25px;
+                    &:first-child{ margin-left: 0 }
+                }
                 a{
                     display: inline;
                     padding-left: 5px;
                     color: $gray-light;
                 }
             }
-            i:first-child{ margin-left: 0 }
         }
 
         &.in {
             visibility: visible !important;
             @include translateY(150px);
-            -webkit-animation: in 0.8s ease forwards;
-            -moz-animation: in 0.8s ease forwards;
             animation: in 0.8s ease forwards;
-
         }
 
         &.already-in {
             visibility: visible !important;
             @include translateY(0);
-            -webkit-animation: none;
-            -moz-animation: none;
             animation: none;
-        }
-    }
-
-    .meta{
-        i{
-            display: inline-block
         }
     }
 
@@ -432,16 +429,20 @@ article img {
             padding: 5px 20px;
             h1{ margin: 0}
             .meta{
+                > span{
+                    margin-right: 20px;
+                    display: inline-block;
+                }
                 color: $gray-light;
                 i{
                     margin: 0 10px 0 25px;
-                    a{
-                        display: inline;
-                        padding-left: 5px;
-                        color: $gray-light;
-                    }
+                    &:first-child{ margin-left: 0 }
                 }
-                i:first-child{ margin-left: 0 }
+                a{
+                    display: inline;
+                    padding-left: 5px;
+                    color: $gray-light;
+                }
             }
             &.all{ border-left: 2px solid $tag-all }
             &.tips{ border-left: 2px solid $tag-tips }

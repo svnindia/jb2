@@ -34,11 +34,11 @@ module.exports = function (grunt) {
         options: {
           livereload: reloadPort
         },
-        tasks: ['concat']
+        tasks: ['concat','groundskeeper', 'uglify']
       },
       sass: {
           files: ['<%= config.public %>/{,*/}*.{scss,sass}'],
-          tasks: ['sass']
+          tasks: ['sass', 'autoprefixer']
       },
 
       jade: {
@@ -79,6 +79,18 @@ module.exports = function (grunt) {
       },
     },
 
+    groundskeeper: {
+      options: {
+        debugger: false,
+        console: false
+      },
+      compile: {
+        files: {
+          'public/js/<%= pkg.name %>.js': 'public/js/<%= pkg.name %>.js'
+        }
+      }
+    },
+
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
@@ -90,16 +102,15 @@ module.exports = function (grunt) {
         }
       }
     },
+
     autoprefixer: {
-      options: {},
-      single_file: {
-        options: {
-          // Target-specific options go here.
-        },
-        src: 'public/css/main.css',
-        dest: 'public/css/main.css'
+      dist: {
+        files: {
+            'public/css/main.css': 'public/css/main.css'
+        }
       }
     }
+
   });
 
   grunt.config.requires('watch.server.files');
@@ -126,9 +137,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
 
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-groundskeeper');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-autoprefixer');
 
-  grunt.registerTask('default', ['develop', 'concat', 'autoprefixer', 'uglify', 'watch']);
-  grunt.registerTask('debug', ['develop', 'concat','autoprefixer', 'watch']);
+  grunt.registerTask('default', ['develop', 'concat', 'groundskeeper', 'autoprefixer', 'uglify', 'watch']);
 };

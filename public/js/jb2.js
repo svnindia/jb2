@@ -13843,18 +13843,8 @@ var BB = Backbone;
             e && e.preventDefault();
             var alias = $(e.currentTarget).attr('data-alias');
             App.Router.Main.navigate('open/' + alias);
-            App.Router.Main.track();
             eve.trigger("post:open", alias);
 
-            // Increment View Count
-            BB.ajax({
-                url: '/posts/inc/' + alias,
-                type: 'PUT',
-                success: function(){
-                    var post = App.Collections.posts.get(alias);
-                    post.set( 'views', post.get('views') + 1);
-                }
-            });
         },
 
         render: function(){
@@ -13931,7 +13921,6 @@ var BB = Backbone;
               enableCounter: true,
               enableTracking: true,
               render: function(api, options) {
-                    debugger;
                     api.loadButtons();
               }
             });
@@ -13954,9 +13943,8 @@ var BB = Backbone;
         },
 
         close : function(){
-            eve.trigger('modal:close');
             App.Router.Main.navigate('');
-            App.Router.Main.track();
+            eve.trigger('modal:close');
         }
     });
 
@@ -13981,7 +13969,6 @@ var BB = Backbone;
             var tag = $(e.currentTarget).attr('data-tag');
             if(tag == 'all') return;
             App.Router.Main.navigate('tag/' + tag, {trigger: true});
-            App.Router.Main.track();
             this.hide();
 
             e && e.preventDefault();
@@ -14062,6 +14049,7 @@ var BB = Backbone;
         */
         eve.on('post:home', function(){
             eve.trigger('modal:close');
+            App.Router.Main.track();
         });
 
         eve.on('post:open', function(alias){
@@ -14103,6 +14091,17 @@ var BB = Backbone;
                 App.Views.modal = new App.Views.Modal({model: post});
                 App.Views.modal.render();
 
+                // Increment View Count
+                BB.ajax({
+                    url: '/posts/inc/' + alias,
+                    type: 'PUT',
+                    success: function(){
+                        var post = App.Collections.posts.get(alias);
+                        post.set( 'views', post.get('views') + 1);
+                    }
+                });
+
+                App.Router.Main.track();
             }
 
         });
@@ -14121,8 +14120,9 @@ var BB = Backbone;
 
             App.Behavior.disqusRequestSend = false;
             $(window).scrollTop(App.Behavior.scrollCache);
-            eve.trigger('domchange:title', "Blog" );
+            eve.trigger('domchange:title', "Blog - My online Playground" );
             App.Views.posts.bindEvents();
+            App.Router.Main.track();
         });
 
         eve.on('tag:search', function(tag){
@@ -14136,6 +14136,8 @@ var BB = Backbone;
                     App.Views.sidebar.trigger('nav:active', tag);
                     App.Views.header.updateTitleText(tag);
                     NProgress.done();
+
+                    App.Router.Main.track();
                 }
             });
         });
