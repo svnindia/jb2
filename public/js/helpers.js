@@ -47,6 +47,38 @@ App.Helpers = {
 
         this.loaded = true;
       }
+    },
+
+    initAddThis: function(){
+      window.addthis_share = {
+        url_transforms : {
+          shorten: {
+            twitter: 'bitly'
+          }
+        },
+        shorteners : {
+          bitly : {}
+        }
+      };
+      var script = 'http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4df7aa5120a0fd91&domready=1';
+      if (window.addthis) {
+        addthis.toolbox('.addthis_toolbox');
+      }
+      $.getScript(script);
+    },
+
+    updateMetaInfo: function(model){
+      // Defaults
+      var title = 'Blog - My online Playground'
+        , description = 'Web Dev, Seminole living in Silicon Valley. Checkout my blog!';
+
+      if(model){
+        title = model.get('title');
+      }
+
+      $(document).attr('title', title);
+      $('meta[name=description]').attr('content', description);
+      $('meta[name=og:title]').attr('content', title);
     }
 };
 
@@ -76,14 +108,15 @@ if (typeof String.prototype.endsWith !== 'function') {
     jQuery Native Enhancements
   ==========================================================================
 */
-$.fn.isOnScreen = function(){
-
+$.fn.isOnScreen = function(offsetBottom){
     var win = $(window);
 
+    if(!offsetBottom) offsetBottom = 0;
     var viewport = {
-        top : win.scrollTop(),
+        top : win.scrollTop() + offsetBottom,
         left : win.scrollLeft()
     };
+
     viewport.right = viewport.left + win.width();
     viewport.bottom = viewport.top + win.height();
 

@@ -5,9 +5,12 @@ html
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
     meta(name="viewport", content="width=device-width, height=device-height, initial-scale=1.0 user-scalable=no")
+
+    meta(name="description", content="Web Dev, Seminole living in Silicon Valley. Checkout my blog!")
+    meta(name="og:title", content="Blog - My online Playground")
+
     link(rel="icon", type="image/x-icon", href="favicon.ico")
     link(rel="author", href="https://plus.google.com/114077659749744397502")
-    meta(name="description", content="Web Developer, MODxCMS Enthsiast, Silicon Valley, Blogger. Checkout my new blog!")
     link(rel='stylesheet', href='css/main.css')
     // [if lt IE 9]
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -135,7 +138,12 @@ body(ontouchstart).clear
         .content
             <%= content %>
         hr.full
-        #shareme.clear(data-text!="<%= title %>")
+        #shareme.clear
+            h3 Share
+            .addthis_toolbox.addthis_default_style
+                a.addthis_button_facebook_like(fb:like:layout="button_count")
+                a.addthis_button_tweet(tw:via="jBhackin")
+                a.addthis_counter.addthis_pill_style
         hr.full.endRuler
         #disqus_thread
 

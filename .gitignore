@@ -3,3 +3,6 @@
 node_modules/
 public/components/
 config.js
+public/css/main.css
+public/js/jb2.js
+public/js/jb2.min.js

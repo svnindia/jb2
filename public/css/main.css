@@ -2942,6 +2942,10 @@ body.md-mode .md-overlay {
   border-left-color: #16a085;
 }
 
+#at16p {
+  display: none;
+}
+
 /*
   ==========================================================================
    Debug Trick

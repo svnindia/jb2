@@ -265,12 +265,9 @@ var BB = Backbone;
         unbindEvents: function(){ $(window).off('.modalReader'); },
 
         onScroll: function(){
-            if( $('#shareme').isOnScreen() ){
-                this.renderSharrre();
-            }
-
-            if( $('hr.endRuler').isOnScreen() ){
+            if( $('hr.endRuler').isOnScreen(500) ){
                 this.unbindEvents();
+                this.renderShare();
                 this.renderDisqus();
             }
         },
@@ -292,29 +289,16 @@ var BB = Backbone;
             App.Helpers.initDisqus(config);
         },
 
-        renderSharrre: function(){
-            $('#shareme').sharrre({
-              share: {
-                twitter: true,
-                facebook: true,
-                googlePlus: true,
-                stumbleupon: true,
-                linkedin: true,
-              },
-              buttons: {
-                googlePlus: {size: 'tall', annotation:'bubble'},
-                facebook: {layout: 'box_count'},
-                twitter: {count: 'vertical', via: 'jBHackin'},
-                stumbleupon: {layout: '5'},
-                linkedin: {counter: 'top'},
-              },
-              url: window.location.href,
-              enableCounter: true,
-              enableTracking: true,
-              render: function(api, options) {
-                    api.loadButtons();
-              }
-            });
+        renderShare: function(){
+            if(App.Behavior.shareInitSend ) return;
+            // Set FB url
+            var url = window.location.href;
+            $('.addthis_button_facebook_like').attr('fb:like:href', url);
+            $('.addthis_button_tweet').attr('tw:url', url);
+            $('.addthis_counter').attr('addthis:url', url);
+            App.Behavior.shareInitSend = true;
+            App.Helpers.initAddThis();
+
         }
     });
 
@@ -471,8 +455,8 @@ var BB = Backbone;
                 // Unbind Collection Scroll Eventhandler
                 App.Views.posts.unbindEvents();
 
-                // Update title
-                eve.trigger('domchange:title', post.get('title') );
+                // Update Meta
+                App.Helpers.updateMetaInfo(post);
 
                 //Cache scroll location
                 App.Behavior.scrollCache = $(window).scrollTop();
@@ -507,12 +491,18 @@ var BB = Backbone;
             if(! $('body').hasClass('md-mode') ) return;
 
             App.Views.modal.unbindEvents();
+
             $('body').removeClass('md-mode');
 
-            App.Behavior.disqusRequestSend = false;
-            $(window).scrollTop(App.Behavior.scrollCache);
-            eve.trigger('domchange:title', "Blog - My online Playground" );
+            App.Behavior.disqusRequestSend = false; // Prevents loading disqus multiple times
+            App.Behavior.shareInitSend = false; // same as above but for shareThis
+
+            $(window).scrollTop(App.Behavior.scrollCache); // Take em back to where they were on the page!
+
+            App.Helpers.updateMetaInfo();
+
             App.Views.posts.bindEvents();
+
             App.Router.Main.track();
         });
 
@@ -531,10 +521,6 @@ var BB = Backbone;
                     App.Router.Main.track();
                 }
             });
-        });
-
-        eve.on('domchange:title', function(title){
-            $(document).attr('title', title);
         });
 
         // Init Router

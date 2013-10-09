@@ -19,6 +19,7 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.locals.pretty = true;
+  app.use(require('prerender-node'));
   app.use(express.favicon(path.join(__dirname, 'public/favicon.ico')));
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
