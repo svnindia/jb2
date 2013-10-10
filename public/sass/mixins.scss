@@ -108,3 +108,18 @@
   -webkit-user-select: none;
   -o-user-select: none;
 }
+
+@mixin loadingColor($color) {
+  #nprogress .bar {
+      background: $color;
+  }
+
+  #nprogress .peg {
+    box-shadow: 0 0 10px $color, 0 0 5px $color;
+  }
+
+  #nprogress .spinner-icon {
+    border-top-color:  $color;
+    border-left-color: $color;
+  }
+}

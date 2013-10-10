@@ -507,6 +507,11 @@ var BB = Backbone;
         });
 
         eve.on('tag:search', function(tag){
+            App.Helpers.removeClassesStartingWith('body', 'tag-');
+
+            //Add tag
+            $('body').addClass('tag-' + tag);
+
             NProgress.start();
             App.Collections.posts.fetch({
                 data: {tag: tag},

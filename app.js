@@ -18,8 +18,8 @@ app.configure(function(){
   app.set('port', config.port || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-  app.locals.pretty = true;
   app.use(require('prerender-node'));
+  app.locals.pretty = true;
   app.use(express.favicon(path.join(__dirname, 'public/favicon.ico')));
   app.use(express.logger('dev'));
   app.use(express.bodyParser());

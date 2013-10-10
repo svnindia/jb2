@@ -2334,6 +2334,17 @@ img {
   /* ie8 */
 }
 
+blockquote {
+  font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+  font-style: italic;
+  border-left: 3px solid #2980b9;
+  padding-left: 20px;
+  margin-left: -10px;
+  margin-top: -1px;
+  padding-bottom: 1px;
+  font-size: 18px;
+}
+
 article img {
   display: block;
   margin-left: auto;
@@ -2928,16 +2939,44 @@ body.md-mode .md-overlay {
   ==========================================================================
 */
 
-#nprogress .bar {
+body.tag-personal #nprogress .bar {
+  background: #e74c3c;
+}
+
+body.tag-personal #nprogress .peg {
+  -webkit-box-shadow: 0 0 10px #e74c3c, 0 0 5px #e74c3c;
+  box-shadow: 0 0 10px #e74c3c, 0 0 5px #e74c3c;
+}
+
+body.tag-personal #nprogress .spinner-icon {
+  border-top-color: #e74c3c;
+  border-left-color: #e74c3c;
+}
+
+body.tag-tutorials #nprogress .bar {
+  background: #2980b9;
+}
+
+body.tag-tutorials #nprogress .peg {
+  -webkit-box-shadow: 0 0 10px #2980b9, 0 0 5px #2980b9;
+  box-shadow: 0 0 10px #2980b9, 0 0 5px #2980b9;
+}
+
+body.tag-tutorials #nprogress .spinner-icon {
+  border-top-color: #2980b9;
+  border-left-color: #2980b9;
+}
+
+body.tag-tips #nprogress .bar {
   background: #16a085;
 }
 
-#nprogress .peg {
+body.tag-tips #nprogress .peg {
   -webkit-box-shadow: 0 0 10px #16a085, 0 0 5px #16a085;
   box-shadow: 0 0 10px #16a085, 0 0 5px #16a085;
 }
 
-#nprogress .spinner-icon {
+body.tag-tips #nprogress .spinner-icon {
   border-top-color: #16a085;
   border-left-color: #16a085;
 }

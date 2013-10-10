@@ -33,6 +33,18 @@ img {
     width: auto\9; /* ie8 */
 }
 
+// medium
+blockquote {
+    font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+    font-style: italic;
+    border-left: 3px solid $flat-blue;
+    padding-left: 20px;
+    margin-left: -10px;
+    margin-top: -1px;
+    padding-bottom: 1px;
+    font-size: 18px;
+}
+
 article img {
     display: block;
     margin-left: auto;
@@ -504,18 +516,9 @@ article img {
    nprogress overrides
   ==========================================================================
 */
-#nprogress .bar {
-    background: $flat-green;
-}
-
-#nprogress .peg {
-  box-shadow: 0 0 10px $flat-green, 0 0 5px $flat-green;
-}
-
-#nprogress .spinner-icon {
-  border-top-color:  $flat-green;
-  border-left-color: $flat-green;
-}
+body.tag-personal {@include loadingColor($tag-personal)}
+body.tag-tutorials{@include loadingColor($tag-tutorials)}
+body.tag-tips     {@include loadingColor($tag-tips)}
 
 
 // AddThis is kinda stupid

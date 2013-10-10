@@ -3,6 +3,14 @@ App.Helpers = {
       return _.template( $('#' + template).html() );
     },
 
+    removeClassesStartingWith: function(selector, prefix){
+      $el = $(selector);
+      var classes = $el.attr("class").split(" ").filter(function(item) {
+          return item.indexOf(prefix) === -1 ? item : "";
+      });
+      $el.attr("class", classes.join(" "));
+    },
+
     disqus_config: function() {
       var config = this.disqus_config.params;
 
@@ -73,12 +81,13 @@ App.Helpers = {
         , description = 'Web Dev, Seminole living in Silicon Valley. Checkout my blog!';
 
       if(model){
-        title = model.get('title');
+        title       = model.get('title');
+        description = model.get('contentIntro');
       }
 
       $(document).attr('title', title);
       $('meta[name=description]').attr('content', description);
-      $('meta[name=og:title]').attr('content', title);
+      // $('meta[name=og:title]').attr('content', title);
     }
 };
 
