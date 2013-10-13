@@ -267,7 +267,6 @@ var BB = Backbone;
         onScroll: function(){
             if( $('hr.endRuler').isOnScreen(500) ){
                 this.unbindEvents();
-                this.renderShare();
                 this.renderDisqus();
             }
         },
@@ -465,6 +464,8 @@ var BB = Backbone;
                 // Container for Modal Element
                 App.Views.modal = new App.Views.Modal({model: post});
                 App.Views.modal.render();
+
+                App.Views.modal.renderShare();
 
                 // Increment View Count
                 BB.ajax({

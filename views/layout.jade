@@ -7,8 +7,11 @@ html
     meta(name="viewport", content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 
     meta(name="description", content="Web Dev, Seminole living in Silicon Valley. Checkout my blog!")
+    //- FB Tags
+    meta(name="og:description", content="Web Dev, Seminole living in Silicon Valley. Checkout my blog!")
     meta(name="og:title", content="Blog - My online Playground")
-
+    meta(name="og:type", content="article")
+    meta(name="og:url", content="http://www.josebrowne.com")
     link(rel="icon", type="image/x-icon", href="favicon.ico")
     link(rel="author", href="https://plus.google.com/114077659749744397502")
     link(rel='stylesheet', href='css/main.css')
@@ -140,14 +143,12 @@ body(ontouchstart).clear
                     <%= tags %>
         .content
             <%= content %>
-        hr.full
         #shareme.clear
-            h3 Share
             .addthis_toolbox.addthis_default_style
                 a.addthis_button_facebook_like(fb:like:layout="button_count")
                 a.addthis_button_tweet(tw:via="jBhackin")
                 a.addthis_counter.addthis_pill_style
-        hr.full.endRuler
+        hr.full.endRuler(style="visibility: hidden")
         #disqus_thread
 
     //- Load Scripts

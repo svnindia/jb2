@@ -12,7 +12,16 @@ exports.index = function(req, res){
       'limit' : config.db.qty,
 
     };
-    db.find({}, options).toArray(function(err, initData){
+
+    // Only Show Unpublished articles in development
+    var fields = {};
+    if(config.env !== "development"){
+        fields = {
+            'published': { $ne: false }
+        };
+    }
+
+    db.find(fields, options).toArray(function(err, initData){
         for (var i = 0; i < initData.length; i++) {
             // Format Date
             initData[i].created = moment(initData[i].created).fromNow();

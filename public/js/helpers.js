@@ -77,8 +77,9 @@ App.Helpers = {
 
     updateMetaInfo: function(model){
       // Defaults
-      var title = 'Blog - My online Playground'
-        , description = 'Web Dev, Seminole living in Silicon Valley. Checkout my blog!';
+      var title       = 'Blog - My online Playground'
+        , description = 'Web Dev, Seminole living in Silicon Valley. Checkout my blog!'
+        , url         = window.location.href;
 
       if(model){
         title       = model.get('title');
@@ -87,7 +88,9 @@ App.Helpers = {
 
       $(document).attr('title', title);
       $('meta[name=description]').attr('content', description);
-      // $('meta[name=og:title]').attr('content', title);
+      $('meta[name=og\\:title]').attr('content', title);
+      $('meta[name=og\\:description]').attr('content', description);
+      $('meta[name=og\\:url]').attr('content', url);
     }
 };
 

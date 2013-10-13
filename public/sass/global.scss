@@ -374,6 +374,8 @@ article img {
 
     .animate {
         @include translateZ(0);
+        -webkit-perspective: 1000;
+        -webkit-backface-visibility: hidden;
         @include transition( all, .2s, ease-out );
     }
 
@@ -456,10 +458,10 @@ article img {
                     color: $gray-light;
                 }
             }
-            &.all{ border-left: 2px solid $tag-all }
-            &.tips{ border-left: 2px solid $tag-tips }
-            &.tutorials{ border-left: 2px solid $tag-tutorials }
-            &.personal{ border-left: 2px solid $tag-personal }
+            &.all{ border-left: 3px solid $tag-all }
+            &.tips{ border-left: 3px solid $tag-tips }
+            &.tutorials{ border-left: 3px solid $tag-tutorials }
+            &.personal{ border-left: 3px solid $tag-personal }
         }
 
         .full{

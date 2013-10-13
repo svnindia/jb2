@@ -19,7 +19,6 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(require('prerender-node'));
-  app.locals.pretty = true;
   app.use(express.favicon(path.join(__dirname, 'public/favicon.ico')));
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
@@ -29,6 +28,9 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
+  console.log('Dev Mode!');
+  app.use(require('prerender-node').set('prerenderServiceUrl', 'http://localhost.com:3001'));
+  app.locals.pretty = true;
   app.use(express.errorHandler());
 });
 
