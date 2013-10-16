@@ -80,27 +80,12 @@ article img {
     }
 }
 
-// Sharrre
-.sharrre{
-    margin: 20px 0;
-    .button{
-        float:left;
-        width:60px;
+#shareme{
+    >div{
+        display: inline-block;
+        margin-right: 10px;
+        min-width: 90px;
     }
-
-    .box{
-        float: left;
-        padding: 0 15px 0 0;
-        margin: 0 15px 0 0;
-        border-right: 3px solid $blue-dark;
-        a{
-            color: $blue-dark;
-            font-size: 40px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    }
-
 }
 
 // Disqus Container
@@ -467,6 +452,8 @@ article img {
         .full{
             margin: 0 -25px;
         }
+
+        h2{ border-bottom: 1px solid $gray-lighter; }
 
     }
 

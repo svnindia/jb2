@@ -57,40 +57,42 @@ App.Helpers = {
       }
     },
 
-    initAddThis: function(){
-      window.addthis_share = {
-        url_transforms : {
-          shorten: {
-            twitter: 'bitly'
-          }
-        },
-        shorteners : {
-          bitly : {}
-        }
-      };
-      var script = 'http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4df7aa5120a0fd91&domready=1';
-      if (window.addthis) {
-        addthis.toolbox('.addthis_toolbox');
-      }
-      $.getScript(script);
+    initShare: function(){
+      var context = $('#shareme');
+      context.find('.twitter-share').attr({
+        'data-url': this.url,
+        'data-text':this.title
+      });
+
+      context.find('.facebook-like').attr({
+        'data-href': this.url,
+        'href': 'http://www.facebook.com/sharer.php?u=' + this.url +'&t=' + this.title
+      });
+
+      context.find('.googleplus-one').attr({
+        'href': 'https://plus.google.com/share?url=' + this.url,
+        'data-href': this.url
+      });
+
+      Socialite.load(context);
     },
 
     updateMetaInfo: function(model){
       // Defaults
-      var title       = 'Blog - My online Playground'
-        , description = 'Web Dev, Seminole living in Silicon Valley. Checkout my blog!'
-        , url         = window.location.href;
+      this.title        = 'Blog - My online Playground';
+      this.description  = 'Web Dev, Seminole living in Silicon Valley. Checkout my blog!';
+      this.url          = window.location.href;
 
       if(model){
-        title       = model.get('title');
-        description = model.get('contentIntro');
+        this.title       = model.get('title');
+        this.description = model.get('contentIntro');
       }
 
-      $(document).attr('title', title);
-      $('meta[name=description]').attr('content', description);
-      $('meta[name=og\\:title]').attr('content', title);
-      $('meta[name=og\\:description]').attr('content', description);
-      $('meta[name=og\\:url]').attr('content', url);
+      $(document).attr('title', this.title);
+      $('meta[name=description]').attr('content', this.description);
+      $('meta[name=og\\:title]').attr('content', this.title);
+      $('meta[name=og\\:description]').attr('content', this.description);
+      $('meta[name=og\\:url]').attr('content', this.url);
     }
 };
 

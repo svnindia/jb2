@@ -29,6 +29,7 @@ var BB = Backbone;
         },
 
         default : function(){
+            NProgress.done();
             console.log('Route: Default! 404?');
         },
 
@@ -233,7 +234,7 @@ var BB = Backbone;
         open: function(e){
             e && e.preventDefault();
             var alias = $(e.currentTarget).attr('data-alias');
-            App.Router.Main.navigate('open/' + alias);
+            App.Router.main.navigate('open/' + alias);
             eve.trigger("post:open", alias);
 
         },
@@ -289,14 +290,7 @@ var BB = Backbone;
         },
 
         renderShare: function(){
-            if(App.Behavior.shareInitSend ) return;
-            // Set FB url
-            var url = window.location.href;
-            $('.addthis_button_facebook_like').attr('fb:like:href', url);
-            $('.addthis_button_tweet').attr('tw:url', url);
-            $('.addthis_counter').attr('addthis:url', url);
-            App.Behavior.shareInitSend = true;
-            App.Helpers.initAddThis();
+            App.Helpers.initShare();
 
         }
     });
@@ -317,7 +311,7 @@ var BB = Backbone;
         },
 
         close : function(){
-            App.Router.Main.navigate('');
+            App.Router.main.navigate('');
             eve.trigger('modal:close');
         }
     });
@@ -342,7 +336,7 @@ var BB = Backbone;
         onItemClick: function(e){
             var tag = $(e.currentTarget).attr('data-tag');
             if(tag == 'all') return;
-            App.Router.Main.navigate('tag/' + tag, {trigger: true});
+            App.Router.main.navigate('tag/' + tag, {trigger: true});
             this.hide();
 
             e && e.preventDefault();
@@ -423,7 +417,7 @@ var BB = Backbone;
         */
         eve.on('post:home', function(){
             eve.trigger('modal:close');
-            App.Router.Main.track();
+            App.Router.main.track();
         });
 
         eve.on('post:open', function(alias){
@@ -437,9 +431,13 @@ var BB = Backbone;
                 var single = new App.Models.Post().set('alias', alias);
 
                 single.fetch({
-                    success: function(post, response){
-                        openPost(post);
-                        NProgress.done();
+                    success: function(post, response, options){
+                        if( typeof response !== "undefined"){
+                            openPost(post);
+                            NProgress.done();
+                        }else{
+                            App.Router.main.default();
+                        }
                     },
                     error: function(){
                         console.log('failed');
@@ -477,7 +475,7 @@ var BB = Backbone;
                     }
                 });
 
-                App.Router.Main.track();
+                App.Router.main.track();
             }
 
         });
@@ -504,7 +502,7 @@ var BB = Backbone;
 
             App.Views.posts.bindEvents();
 
-            App.Router.Main.track();
+            App.Router.main.track();
         });
 
         eve.on('tag:search', function(tag){
@@ -524,13 +522,13 @@ var BB = Backbone;
                     App.Views.header.updateTitleText(tag);
                     NProgress.done();
 
-                    App.Router.Main.track();
+                    App.Router.main.track();
                 }
             });
         });
 
         // Init Router
-        App.Router.Main = new App.Router;
+        App.Router.main = new App.Router;
         BB.history.start({ pushState: true, root: App.Config.Root });
     };
 

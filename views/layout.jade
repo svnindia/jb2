@@ -144,10 +144,13 @@ body(ontouchstart).clear
         .content
             <%= content %>
         #shareme.clear
-            .addthis_toolbox.addthis_default_style
-                a.addthis_button_facebook_like(fb:like:layout="button_count")
-                a.addthis_button_tweet(tw:via="jBhackin")
-                a.addthis_counter.addthis_pill_style
+            a.socialite.twitter-share(href='http://twitter.com/share', data-via="jBhackin", data-text='empty', data-url='empty', rel='nofollow', target='_blank')
+                span.vhidden Share on Twitter
+            a.socialite.facebook-like(href='#', data-send='false', data-layout='button_count', data-width='60', data-show-faces='false', rel='nofollow', target='_blank')
+                span.vhidden Share on Facebook
+            a.socialite.googleplus-one(href='#', data-size='medium', data-href='#', rel='nofollow', target='_blank')
+                span.vhidden Share on Google+
+
         hr.full.endRuler(style="visibility: hidden")
         #disqus_thread
 
@@ -157,7 +160,7 @@ body(ontouchstart).clear
         script(src='components/underscore/underscore.js')
         script(src='components/backbone/backbone.js')
         script(src='components/nprogress/nprogress.js')
-        script(src='components/sharrre/jquery.sharrre.js')
+        script(src='components/socialite/socialite.js')
         script(src='js/namespaces.js')
         script(src='js/helpers.js')
         script(src='js/main.js')

@@ -1,22 +1,29 @@
+code{
+  margin: 0;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+  font-size: 90%;
+}
+
 pre {
   margin: 10px -25px;
-  code{
-    overflow: auto;
-    word-wrap: normal;
-    white-space: pre;
-  }
-}
-code{
-    margin-bottom: -25px;
-}
-pre code{
-  font-family: 'Monaco', 'Menlo', monospace;
   background-color: $blue-dark-light;
-  display: block;
-  clear: both;
-  padding: 0 10px;
-  font-size: 80%;
+  padding: 20px;
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+  code{ display: block }
 }
+
+// Github
+li code,
+p code{
+  margin: 0 2px;
+  padding: 0px 5px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
 .pln {
   color: #f8f7f2;
 }

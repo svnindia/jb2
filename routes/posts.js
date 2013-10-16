@@ -21,6 +21,7 @@ exports.list = function(req, res){
     // Fields
     var fields = {};
 
+
     // Search
     if(req.query.search){
         var q = new RegExp('.*' + req.query.search +'.*', 'i');
@@ -32,13 +33,21 @@ exports.list = function(req, res){
         fields = { tags: req.query.tag };
     }
 
+    if(config.env !== "development"){
+        fields.published =  { $ne: false };
+    }
+
     db.findItems(fields, options, function(err, posts){
-        if(err) throw err;
-        for (var i = 0; i < posts.length; i++) {
-            // Format Date
-            posts[i].created = moment(posts[i].created).fromNow();
+        if(!err){
+            for (var i = 0; i < posts.length; i++) {
+                // Format Date
+                posts[i].created = moment(posts[i].created).fromNow();
+            }
+            res.json(200, posts);
+        }else{
+            console.log('we the best');
+            res.json(200, {error: err.message});
         }
-        res.json(200, posts);
     });
 };
 
@@ -47,12 +56,17 @@ exports.item = function(req, res){
     db.findOne({
         alias: req.params.alias
     }, function(err, post) {
-        if(err) throw err;
+        if(!err){
+            if(post !== null){
+                post.created = moment(post.created).fromNow();
+                res.json(200, post);
+            }else{
+                res.send('That post could not be found', 204);
+            }
+        }else{
+            res.json(400, {error: err.message});
+        }
 
-        // Format Date
-        post.created = moment(post.created).fromNow();
-
-        res.json(200, post);
     });
 };
 

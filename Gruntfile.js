@@ -69,7 +69,7 @@ module.exports = function (grunt) {
           'public/components/underscore/underscore.js',
           'public/components/backbone/backbone.js',
           'public/components/nprogress/nprogress.js',
-          'public/components/sharrre/jquery.sharrre.js',
+          'public/components/socialite/socialite.js',
           'public/js/namespaces.js',
           'public/js/helpers.js',
           'public/js/main.js',

@@ -1,0 +1,157 @@
+<p>Although still a work in progress, consider this my journal of the design and development process thus far. I also added some notes on how I tackled some pretty common problems. You guys are right.. I do need to blog more often!</p>
+
+<p>It&#8217;s amazing how dated my old blog felt after just one year! I guess it just goes to show how fast the web is progressing. </p>
+
+<h2>Show Me The Stack</h2>
+
+<p>So when trying to figure out the stack for this project I really wanted to get away from the usual PHP - MySQL - Codeigniter/Modx stack that I was used to.</p>
+
+<h3>On the back-end:</h3>
+
+<ul>
+<li><strong><a href="http://nodejs.org/">NodeJS</a></strong>: Just because I was pretty impressed by the <a href="http://jaxbot.me/articles/benchmarks_nodejs_vs_go_vs_php_3_14_2013">benchmarks</a> and I like javascript!</li>
+<li><strong><a href="http://expressjs.com/">Express.js</a></strong>: Most mature framework for node.</li>
+<li><strong><a href="http://www.mongodb.org/">MongoDB</a></strong>: Seems to be the most <a href="http://techcrunch.com/2013/10/04/mongodb-raises-150m-for-nosql-database-technology-with-salesforce-joining-as-investor/">promising</a> noSQL DB.</li>
+<li><strong><del><a href="http://mongoosejs.com/">Mongoose</a></del></strong>: This is a Node Module that lets you to define schemas for your MongoDB collections. I changed my mind and deleted this module. Why? Well what I like about Mongo is its schema-less nature.</li>
+<li><strong><a href="https://github.com/kissjs/node-mongoskin">MongoSkin</a></strong>: This is pretty much just a wrapper for the native mongodb node driver. Less callback mayhem. <a href="https://github.com/mafintosh/mongojs">Mongojs</a> is also pretty good.</li>
+<li><strong><a href="http://bower.io/">Bower</a></strong>: Elegant - NPM style - Client side dependency management</li>
+</ul>
+
+<h3>On the front-end:</h3>
+
+<ul>
+<li><strong><a href="http://backbonejs.org/">Backbone.js</a></strong>: I really enjoy the lightweight, non-opinionated and event driven nature of this library. Plus it&#8217;s very well documented!</li>
+<li><strong><a href="http://ricostacruz.com/nprogress/">NProgress</a></strong>: Really cool preloader plug-in that went <a href="https://news.ycombinator.com/item?id=6246183">viral on HN</a> a few weeks ago. I will say that very rarely do I come across a plug-in that just works EXACTLY as advertised. I didn&#8217;t even have to read docs or hack it.. API is idiot proof (just 4 simple endpoints) and just does what you expect right out of the box.</li>
+<li><del><strong><a href="http://getbootstrap.com/">Bootstrap 3</a></strong></del>: I quickly realized that it was taking just as much effort (mostly sifting through documentation) to implement this semi-trivial layout as it would if I just wrote it myself. FYI: I later stumbled upon <a href="http://startbootstrap.com/simple-sidebar">this template</a> that is almost exactly what I needed. But oh well.. doing it myself was more fun.</li>
+</ul>
+
+<h3>Hosting:</h3>
+
+<ul>
+<li><strong>Nodejitsu</strong>: I took this for a spin one day and never got out!.. The CLI is very straghtforward..just <code>jitsu deploy</code>. It has all the features you&#8217;d expect like Continuous Deploys, Snapshots w/ auto Versioning etc etc. And the mods answered all my questions very quickly on their <a href="http://webchat.jit.su/">IRC channel</a></li>
+<li><strong>MongoHQ</strong>: Honestly don&#8217;t have an opinion about this yet. It was just one of the options in NodeJitsu. It did go down today for ~20min.. But I suppose those things happen. What I like is that they immediately updated their status page and announced that they were restarting the crashed server.</li>
+</ul>
+
+<p>And there you have it&#8230; you&#8217;ve seen my stack!</p>
+
+<h2>Ok, But why a single page app?</h2>
+
+<p>Excellent question.. Despite popular belief, it&#8217;s not all sexy animations and preloaders over here. There are indeed many cool benefits but also some additional challenges to be considered.</p>
+
+<h3>Added Challenges:</h3>
+
+<p><strong>State Management</strong><br/>
+This is something that you don&#8217;t really need to think about when the application logic is on the server side - A visitor navigates to a specific URL, the server processes this request, does all the magic, and ultimately delivers the perfect page with the right title, meta info, active menu item, content etc. This &#8220;automatic&#8221; and predictable state management is actually not free with single page applications. State needs to be manually managed for each request. This becomes even more important when dealing with the next issue.</p>
+
+<p><strong>Crawlablility</strong> (SEO)<br/>
+This is probably the single biggest reason why most people shy away from SPAs&#8230; and for good reason. Unless I were creating content for just me and my mom (Sidenote: luv mum) then I NEED search engines to index my app and all its pages properly. This is tricky because all the URLs point to same page which is then asynchronously optimized with javascript AFTER page load. </p>
+
+<p>This is like not waiting for your girlfriend to get ready before snapping pictures of her and posting them on GooglePlus! Just rude! Now, in a perfect world crawlers would just WAIT for all your javascript to finish executing and THEN do their thing. However, if that were the case I wouldn&#8217;t be writing this paragraph now would I? :)</p>
+
+<p><strong>The Good ol Back Button</strong><br/>
+Again, a behavior you don&#8217;t even need to think about with standard sites. Luckily libraries like <a href="http://backbonejs.org/#History">BackboneJS</a> and <a href="http://docs.angularjs.org/guide/dev_guide.services.$location">AngularJS</a> provide some very smart solutions for this. So although it is something to consider, I don&#8217;t think this is a deal breaker anymore, especially with the more widespread adoption of <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history#The_pushState().C2.A0method">HTML5 pushState</a> (<a href="http://caniuse.com/#feat=history">~74%</a>).</p>
+
+<h3>Added Benefit:</h3>
+
+<p><strong>Better <del>Performance</del> Perceived Performance</strong><br/>
+As web developers we want to govern the user experience like a compulsive dictator. It&#8217;s difficult to do this if we relinquish total control of our kingdom each time a user makes a request for data not yet available (the blank screen of death). Single page apps allow us outsource this request to an asynchronous process and engage the user while this magic is going on (preloaders and/or partial rendering). This results in a relatively small improvement in &#8220;actual&#8221; performance (fetch size smaller) but much improved <a href="http://stackoverflow.com/questions/111368/how-do-you-performance-test-javascript-code">perceived performance</a>. To me, this is the most valuable benefit and why I think single page apps have become so popular lately. #winning</p>
+
+<h2>The Solutions (opinionated)</h2>
+
+<p>Here are some of the solutions to some pretty common problems that worked out for me.</p>
+
+<h3>Infinite Scroll</h3>
+
+<p>As always, I first tried to find something pre-baked that I didn&#8217;t have to write from scratch, but all the plug-ins I found seemed too involved and hefty for this little blog. What I needed was really not that complicated; I had done this from scratch on past projects and it really wasn&#8217;t that bad. So after a couple minutes of sifting through plug-in docs I decided to just implement it myself, that way I have more control and know exactly what&#8217;s going on when debugging. You can take a look at the <a href="https://github.com/digitalmaster/jb2">Github Repo</a> for details.</p>
+
+<p>I also bootstrap the first 5 documents server-side so there&#8217;s no need to make that initial ajax request each time you hit the homepage (this is actually <a href="http://backbonejs.org/#Collection-fetch">recommended by Backbone.js</a>). </p>
+
+<blockquote>
+..all models needed at load time should already be bootstrapped into place
+</blockquote>
+
+<p>I could explain in detail how this works in a future post (maybe even a quick screencast), just let me know in comments if interested.</p>
+
+<h3>Asynchronous Comments (disqus)</h3>
+
+<p>Rendering 40+ comments while launching a modal window makes for a not-so-smooth rendering experience. To keep modals &#8220;snappy&#8221; I had to find a way to delay the disqus reset/init. I solved this by starting to load comments after the user starts scrolling down the page. Checkout the helper methods that make this happen.</p>
+
+<p>The helper methods below checks to see if we&#8217;ve already downloaded the disqus scripts, if not, we do so asynchronously. If we have, we just reset it with new configs. Here&#8217;s the official <a href="http://help.disqus.com/customer/portal/articles/472107-using-disqus-on-ajax-sites">disqus ajax</a> docs or checkout the <a href="https://github.com/digitalmaster/jb2/blob/master/public/js/helpers.js#L43">helper source</a> if you curious about how I put it all together.</p>
+
+<pre><code><span class="pln">initDisqus</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">config</span><span class="pun">){</span><span class="pln">
+  disqus_config</span><span class="pun">.</span><span class="kwd">params</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> config</span><span class="pun">;</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">this</span><span class="pun">.</span><span class="pln">loaded</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    DISQUS</span><span class="pun">.</span><span class="pln">reset</span><span class="pun">({</span><span class="pln">
+      reload</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">var</span><span class="pln"> dsq </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'script'</span><span class="pun">);</span><span class="pln"> dsq</span><span class="pun">.</span><span class="pln">type </span><span class="pun">=</span><span class="pln"> </span><span class="str">'text/javascript'</span><span class="pun">;</span><span class="pln"> dsq</span><span class="pun">.</span><span class="pln">async </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+      dsq</span><span class="pun">.</span><span class="pln">src </span><span class="pun">=</span><span class="pln"> </span><span class="str">'http://'</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> disqus_shortname </span><span class="pun">+</span><span class="pln"> </span><span class="str">'.disqus.com/embed.js'</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">(</span><span class="pln">document</span><span class="pun">.</span><span class="pln">getElementsByTagName</span><span class="pun">(</span><span class="str">'head'</span><span class="pun">)[</span><span class="lit">0</span><span class="pun">]</span><span class="pln"> </span><span class="pun">||</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementsByTagName</span><span class="pun">(</span><span class="str">'body'</span><span class="pun">)[</span><span class="lit">0</span><span class="pun">]).</span><span class="pln">appendChild</span><span class="pun">(</span><span class="pln">dsq</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">})();</span><span class="pln">
+
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">loaded </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>This one works the same as the one above but for the comments counts.js instead.</p>
+
+<pre><code><span class="pln">initDisqusCount</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">typeof</span><span class="pun">(</span><span class="pln">DISQUSWIDGETS</span><span class="pun">)</span><span class="pln"> </span><span class="pun">!==</span><span class="pln"> </span><span class="str">'undefined'</span><span class="pln"> </span><span class="pun">){</span><span class="pln">
+    DISQUSWIDGETS</span><span class="pun">.</span><span class="pln">getCount</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">}</span><span class="kwd">else</span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">(</span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">var</span><span class="pln"> s </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'script'</span><span class="pun">);</span><span class="pln"> s</span><span class="pun">.</span><span class="pln">async </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+      s</span><span class="pun">.</span><span class="pln">type </span><span class="pun">=</span><span class="pln"> </span><span class="str">'text/javascript'</span><span class="pun">;</span><span class="pln">
+      s</span><span class="pun">.</span><span class="pln">src </span><span class="pun">=</span><span class="pln"> </span><span class="str">'http://'</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> disqus_shortname </span><span class="pun">+</span><span class="pln"> </span><span class="str">'.disqus.com/count.js'</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">(</span><span class="pln">document</span><span class="pun">.</span><span class="pln">getElementsByTagName</span><span class="pun">(</span><span class="str">'HEAD'</span><span class="pun">)[</span><span class="lit">0</span><span class="pun">]</span><span class="pln"> </span><span class="pun">||</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementsByTagName</span><span class="pun">(</span><span class="str">'BODY'</span><span class="pun">)[</span><span class="lit">0</span><span class="pun">]).</span><span class="pln">appendChild</span><span class="pun">(</span><span class="pln">s</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}());</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<h3>Google Analytics &amp; Custom Events Tracking (Analytics.js)</h3>
+
+<p>For Analytics I&#8217;m actually using the new <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/">Analytics.js</a> script (still in beta), and so far it has worked great. I even started tracking custom user events. For example: I wanted to keep track of how many people actually scrolled to the end of the home page. Since I already had an event being triggered for this action I just added this one line of code: <code>ga('send', 'event', 'scrollEvents', 'Scrolled to end');</code>. Custom event tracking is not new, but the API is way more elegant! </p>
+
+<img src="/images/blog/redesign/analytics.jpg" alt="Custom events in Google Analytics" />
+
+<p>The only real issue I had was that it didn&#8217;t work well with my old account property (visits were being tracked but not recorded). As it <a href="http://productforums.google.com/forum/#!topic/analytics/bXAunzrGDEQ">turns out</a>, I had to create a new property with the &#8220;Universal Analytics&#8221; feature selected to get this to work correctly. Who would have thought? 0_o</p>
+
+<h3>SEO</h3>
+
+<p>I actually delayed this article by a few days because I wanted my solution to this to be a part of this post.</p>
+
+<p><strong>Progressive Enhancement</strong> VS <strong>Pre-rendering</strong></p>
+
+<p>There&#8217;s one <a href="http://coding.smashingmagazine.com/2013/09/03/progressive-enhancement-is-faster/">group</a> that recommends Progressive Enhancement as the solution to this (among other things), and then <a href="http://backbonetutorials.com/seo-for-single-page-apps/">another group</a> on the side of generating snapshots of fully (all JS done executing) rendered pages. These pages are generated by a headless browser like <a href="http://phantomjs.org/">PhantomJS</a> or <a href="http://docs.seleniumhq.org/">Selenium</a>. </p>
+
+<p>They each have their cons - Progressive Enhancement will make your application code more complex and Redirection comes with the risk of having your application banned from search engines! Guess which side I&#8217;m on?</p>
+
+<p>I&#8217;m on the side of creating snapshots for two reason:</p>
+
+<ol>
+<li>I&#8217;m a <a href="http://blogoscoped.com/archive/2005-08-24-n14.html">lazy developer</a></li>
+<li>Google provides <a href="https://developers.google.com/webmasters/ajax-crawling/docs/getting-started">specs</a> on how it should be done.<br/>
+ TL;DR - Basically involves detecting URLs containing the <code>..?_escaped_fragment_</code> hash fragment and responding with the fully rendered snapshots to be used for indexing.</li>
+</ol>
+
+<p><strong>Ok..How?</strong></p>
+
+<p>I decided to go with <a href="https://github.com/collectiveip/prerender-node">prerender-node</a>, an express middleware that installs with just one line of code! It uses User-Agent string matching to detect and redirect bots to an instance of <a href="https://github.com/collectiveip/prerender">prerender</a> which responds with PhantomJS generated snapshots. Ideally it would also use the recommended &#8220;escaped_fragment&#8221; technique for detection, but this module is less than a month old and the developers have already indicated that this is <a href="https://github.com/collectiveip/prerender-node/issues/1">coming next</a>! UPDATE: Already added!</p>
+
+<p>You can actually test this right now by just making a GET request to the URL below and inspecting the source. </p>
+
+<pre><code><span class="pln">http://prerender.herokuapp.com/http://josebrowne.com/open/from-windows-to-mac-dev</span></code></pre>
+
+<p>Notice that the title, meta tags and content (which are both updated with JS) are correct. I tested this using the Google &#8220;Fetch as Google Bot&#8221; Webmaster tool and <a href="https://developers.facebook.com/tools/debug/og/object?q=josebrowne.com%2Fopen%2Ffrom-windows-to-mac-dev">Facebook URL debugger</a>. confirmed that this method works as advertised!</p>
+
+<img src="/images/blog/redesign/seo.jpg" alt="Works as advertised!" />
+
+<p>As for <a href="https://github.com/collectiveip/prerender">prerender</a>, you can run your own instance if you want (which is easy to configure) OR use the default, which points to a prerender instance hosted by the very generous folks at <a href="https://www.collectiveip.com/">CollectiveIP</a>.</p>
+
+<h2>Comment / Share / Like</h2>
+
+<p>That&#8217;s all I got for now. Feedback/criticism/suggestions are all welcomed and encouraged! As always I&#8217;ll try and keep this up to date!</p>
+
+<p><a href="https://github.com/digitalmaster/jb2">View source on GitHub</a></p>

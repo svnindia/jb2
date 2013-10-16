@@ -8,41 +8,34 @@
 </div>
 
 <h1>Animate on Hover function</h1>
-<pre data-gclp-id="1" data-initialized="true">
-<code><span class="pln">
-    </span><span class="kwd">function</span><span class="pln"> animationHover</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> animation</span><span class="pun">){</span><span class="pln">
-      element </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="pln">element</span><span class="pun">);</span><span class="pln">
-      element</span><span class="pun">.</span><span class="pln">hover</span><span class="pun">(</span><span class="pln">
-          </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
-              element</span><span class="pun">.</span><span class="pln">addClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
-          </span><span class="pun">},</span><span class="pln">
-          </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
-              </span><span class="com">//wait for animation to finish before removing classes</span><span class="pln">
-              window</span><span class="pun">.</span><span class="pln">setTimeout</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
-                  element</span><span class="pun">.</span><span class="pln">removeClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
-              </span><span class="pun">},</span><span class="pln"> </span><span class="lit">2000</span><span class="pun">);</span><span class="pln">
-          </span><span class="pun">});</span><span class="pln">
-    </span><span class="pun">};</span><span class="pln">
-  </span></code>
-</pre>
+<pre><code><span class="kwd">function</span><span class="pln"> animationHover</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> animation</span><span class="pun">){</span><span class="pln">
+  element </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="pln">element</span><span class="pun">);</span><span class="pln">
+  element</span><span class="pun">.</span><span class="pln">hover</span><span class="pun">(</span><span class="pln">
+    </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      element</span><span class="pun">.</span><span class="pln">addClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln">
+    </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+      </span><span class="com">//wait for animation to finish before removing classes</span><span class="pln">
+      window</span><span class="pun">.</span><span class="pln">setTimeout</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+        element</span><span class="pun">.</span><span class="pln">removeClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln"> </span><span class="lit">2000</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">);</span><span class="pln">
+</span><span class="pun">};</span></code></pre>
 
 <h1>Animate on Click function</h1>
-<pre data-gclp-id="2" data-initialized="true">
-<code><span class="pln">
-    </span><span class="kwd">function</span><span class="pln"> animationClick</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> animation</span><span class="pun">){</span><span class="pln">
-      element </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="pln">element</span><span class="pun">);</span><span class="pln">
-      element</span><span class="pun">.</span><span class="pln">click</span><span class="pun">(</span><span class="pln">
-          </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
-              element</span><span class="pun">.</span><span class="pln">addClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
-              </span><span class="com">//wait for animation to finish before removing classes</span><span class="pln">
-              window</span><span class="pun">.</span><span class="pln">setTimeout</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
-                  element</span><span class="pun">.</span><span class="pln">removeClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
-              </span><span class="pun">},</span><span class="pln"> </span><span class="lit">2000</span><span class="pun">);</span><span class="pln">
-
-          </span><span class="pun">});</span><span class="pln">
-    </span><span class="pun">};</span><span class="pln">
-  </span></code>
-</pre>
+<pre><code><span class="kwd">function</span><span class="pln"> animationClick</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> animation</span><span class="pun">){</span><span class="pln">
+  element </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="pln">element</span><span class="pun">);</span><span class="pln">
+  element</span><span class="pun">.</span><span class="pln">click</span><span class="pun">(</span><span class="pln">
+    </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      element</span><span class="pun">.</span><span class="pln">addClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
+      </span><span class="com">//wait for animation to finish before removing classes</span><span class="pln">
+      window</span><span class="pun">.</span><span class="pln">setTimeout</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+          element</span><span class="pun">.</span><span class="pln">removeClass</span><span class="pun">(</span><span class="str">'animated '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> animation</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln"> </span><span class="lit">2000</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">);</span><span class="pln">
+</span><span class="pun">};</span></code></pre>
 
 <p>Good luck!</p>
 
