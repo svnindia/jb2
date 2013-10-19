@@ -2,6 +2,9 @@ var path = require('path'),
     rootPath = path.normalize(__dirname + '/..'),
     env = process.env.NODE_ENV || 'development';
 
+    // Un-comment line below to simulate production mode
+    // env = "production";
+
 // List of Perminant redirects from my old site.
 var redirects = [
   {
@@ -19,7 +22,8 @@ var config = {
         url : 'mongodb://<username>:<port>/<password>',
         qty: 4
       },
-      redirects: redirects
+      redirects: redirects,
+      disqus_shortname: ''
   },
 
   production: {
@@ -29,7 +33,8 @@ var config = {
         url : 'mongodb://<username>:<port>/<password>',
         qty: 4
       },
-      redirects: redirects
+      redirects: redirects,
+      disqus_shortname: ''
   }
 };
 

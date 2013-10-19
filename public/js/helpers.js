@@ -11,14 +11,6 @@ App.Helpers = {
       $el.attr("class", classes.join(" "));
     },
 
-    disqus_config: function() {
-      var config = this.disqus_config.params;
-
-      this.page.identifier = config.identifier;
-      this.page.url        = config.url;
-      this.page.title      = config.title;
-    },
-
     forceRedraw: function(obj) {
       obj.hide();
       obj.each(function() {
@@ -99,7 +91,6 @@ App.Helpers = {
 // Needs to be global :-/
 var disqus_config = function disqus_config() {
   var config = disqus_config.params;
-
   this.page.identifier = config.identifier | null;
   this.page.url        = config.url | null ;
   this.page.title      = config.title | null;

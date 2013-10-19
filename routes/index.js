@@ -28,7 +28,7 @@ exports.index = function(req, res){
         }
         req.app.locals.initData = initData;
         req.app.locals.app = req.app;
-        res.render('layout', { enviroment: config.env });
+        res.render('index', { config: config });
 
     });
 
