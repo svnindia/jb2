@@ -262,14 +262,27 @@ var BB = Backbone;
             this.bindEvents();
         },
 
-        bindEvents: function(){ $(window).on('scroll.modalReader', this.onScroll); },
-        unbindEvents: function(){ $(window).off('.modalReader'); },
+        bindEvents: function(){
+            $(document).on('scroll.modalReader', this.onScroll);
+            $(document).on('keyup.modalReader', this.onKeyPress);
+        },
+
+        unbindEvents: function(){ $(document).off('.modalReader'); },
 
         onScroll: function(){
             if( $('hr.endRuler').isOnScreen(500) ){
                 this.unbindEvents();
                 this.renderDisqus();
             }
+        },
+
+        onKeyPress: function(e){
+            var tagType = e.target.tagName.toLowerCase();
+            if(tagType == 'input' || tagType == 'textarea') return; /* Respect form inputs */
+            var keyEscape = 27;
+
+            // Close modal if Esc Key
+            if (e.keyCode === keyEscape) eve.trigger('modal:close');
         },
 
         render: function(){
@@ -311,7 +324,6 @@ var BB = Backbone;
         },
 
         close : function(){
-            App.Router.main.navigate('');
             eve.trigger('modal:close');
         }
     });
@@ -449,7 +461,7 @@ var BB = Backbone;
             }
 
             function openPost(post){
-                // Unbind Collection Scroll Eventhandler
+                // Unbind Collection Events
                 App.Views.posts.unbindEvents();
 
                 // Update Meta
@@ -488,6 +500,8 @@ var BB = Backbone;
 
         eve.on('modal:close', function(){
             if(! $('body').hasClass('md-mode') ) return;
+
+            App.Router.main.navigate('');
 
             App.Views.modal.unbindEvents();
 
