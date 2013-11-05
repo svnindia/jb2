@@ -15,6 +15,7 @@
     "font-awesome": "~3.2.1",
     "moment": "~2.2.1",
     "nprogress": "~0.1.2",
-    "socialite": "https://github.com/tmort/Socialite.git"
+    "socialite": "https://github.com/tmort/Socialite.git",
+    "fastclick": "~0.6.10"
   }
 }

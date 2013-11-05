@@ -68,6 +68,7 @@ module.exports = function (grunt) {
           'public/components/jquery/jquery.js',
           'public/components/underscore/underscore.js',
           'public/components/backbone/backbone.js',
+          'public/components/fastclick/lib/fastclick.js',
           'public/components/nprogress/nprogress.js',
           'public/components/socialite/socialite.js',
           'public/js/namespaces.js',

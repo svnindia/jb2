@@ -20,7 +20,7 @@
     "moment": ">=2.2.1",
     "prerender-node": ">=0.1.0"
   },
-  "version": "0.1.0-32",
+  "version": "0.1.0-33",
   "engines": {
     "node": "0.10.x"
   },

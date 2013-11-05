@@ -159,6 +159,7 @@ body(ontouchstart).clear
         script(src='components/jquery/jquery.js')
         script(src='components/underscore/underscore.js')
         script(src='components/backbone/backbone.js')
+        script(src='components/fastclick/lib/fastclick.js')
         script(src='components/nprogress/nprogress.js')
         script(src='components/socialite/socialite.js')
         script(src='js/namespaces.js')
@@ -172,4 +173,10 @@ body(ontouchstart).clear
     script .
         var disqus_shortname = "#{config.disqus_shortname}";
         var bootstrapData = !{JSON.stringify(initData)};
+
+        // Rescue 300ms tap delay on mobile
+        $(function() {
+            FastClick.attach(document.body);
+        });
+
         App.init(bootstrapData);
