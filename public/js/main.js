@@ -272,7 +272,7 @@ var BB = Backbone;
         onScroll: function(){
             if( $('hr.endRuler').isOnScreen(500) ){
                 this.unbindEvents();
-                this.renderDisqus();
+                this.fadeInResources();
             }
         },
 
@@ -283,6 +283,10 @@ var BB = Backbone;
 
             // Close modal if Esc Key
             if (e.keyCode === keyEscape) eve.trigger('modal:close');
+        },
+
+        fadeInResources: function(){
+
         },
 
         render: function(){
@@ -304,7 +308,6 @@ var BB = Backbone;
 
         renderShare: function(){
             App.Helpers.initShare();
-
         }
     });
 
@@ -476,6 +479,7 @@ var BB = Backbone;
                 App.Views.modal.render();
 
                 App.Views.modal.renderShare();
+                App.Views.modal.renderDisqus();
 
                 // Increment View Count
                 BB.ajax({
@@ -544,6 +548,11 @@ var BB = Backbone;
         // Init Router
         App.Router.main = new App.Router;
         BB.history.start({ pushState: true, root: App.Config.Root });
+
+        // Rescue 300ms tap delay on mobile
+        $(function() {
+            FastClick.attach(document.body);
+        });
     };
 
 })(this, jQuery, Backbone, _);

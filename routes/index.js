@@ -4,6 +4,7 @@
 var config = require('../config');
 var mongo = require('mongoskin');
 var moment = require('moment');
+var helpers = require('../helpers');
 var db = mongo.db( config.db.url, {safe: false} ).collection('posts');
 
 exports.index = function(req, res){
@@ -25,6 +26,7 @@ exports.index = function(req, res){
         for (var i = 0; i < initData.length; i++) {
             // Format Date
             initData[i].created = moment(initData[i].created).fromNow();
+            initData[i].views   = helpers.addCommas(initData[i].views);
         }
         req.app.locals.initData = initData;
         req.app.locals.app = req.app;

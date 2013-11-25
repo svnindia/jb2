@@ -4,6 +4,7 @@
 var config = require('../config');
 var mongo = require('mongoskin');
 var moment = require('moment');
+var helpers = require('../helpers');
 var db = mongo.db( config.db.url, {safe: false} ).collection('posts');
 
 exports.list = function(req, res){
@@ -42,6 +43,8 @@ exports.list = function(req, res){
             for (var i = 0; i < posts.length; i++) {
                 // Format Date
                 posts[i].created = moment(posts[i].created).fromNow();
+                posts[i].views = helpers.addCommas(posts[i].views);
+
             }
             res.json(200, posts);
         }else{
@@ -59,6 +62,7 @@ exports.item = function(req, res){
         if(!err){
             if(post !== null){
                 post.created = moment(post.created).fromNow();
+                post.views   = helpers.addCommas(post.views);
                 res.json(200, post);
             }else{
                 res.send('That post could not be found', 204);
