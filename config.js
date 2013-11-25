@@ -1,6 +1,7 @@
 var path = require('path'),
     rootPath = path.normalize(__dirname + '/..'),
-    env = process.env.NODE_ENV || 'development';
+    env = process.env.NODE_ENV || 'development',
+    port = process.env.PORT || 3000;
 
     // Un-comment line below to simulate production mode
     // env = "production";
@@ -67,7 +68,7 @@ var config = {
   development: {
       env: env,
       root: rootPath,
-      port: 3000,
+      port: port,
       db: {
         url : 'mongodb://jose:Kevin007@paulo.mongohq.com:10075/jb2?auto_reconnect=true',
         qty: 4
@@ -80,6 +81,7 @@ var config = {
   production: {
       env: env,
       random: "random",
+      port: port,
       root: rootPath,
       db: {
         url : 'mongodb://jose:Kevin007@paulo.mongohq.com:10075/jb2?auto_reconnect=true',
