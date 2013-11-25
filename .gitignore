@@ -1,6 +1,5 @@
 .sass-cache/
 .public/.sass-cache/
-node_modules/
 public/components/
 config.js
 public/css/main.css
