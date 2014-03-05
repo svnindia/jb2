@@ -80,7 +80,8 @@ exports.itemInc = function(req, res){
         { alias: req.params.alias },
         {
             $inc : { views: 1 }
-        }
+        },
+        { w: 0 }
     );
     res.send("Incremented", 200);
 };
