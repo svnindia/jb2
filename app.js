@@ -11,7 +11,7 @@ var express  = require('express')
   , util     = require('util');
 
 var mongo = require('mongoskin');
-var db = mongo.db( config.db.url, {safe: false} ).collection('posts');
+var db = mongo.db( config.db.url, {safe: true} ).collection('posts');
 
 var app = express();
 app.configure(function(){
