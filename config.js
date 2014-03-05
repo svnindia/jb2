@@ -85,7 +85,7 @@ var config = {
       root: rootPath,
       db: {
         url : 'mongodb://jose:Kevin007@paulo.mongohq.com:10075/jb2?auto_reconnect=true',
-        qty: 4
+        qty: 5
       },
       redirects: redirects,
       disqus_shortname: 'josebrowne'
