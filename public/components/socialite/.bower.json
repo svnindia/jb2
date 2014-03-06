@@ -1,11 +1,11 @@
 {
   "name": "socialite",
   "homepage": "https://github.com/tmort/Socialite",
-  "_release": "fb04be59c2",
+  "_release": "41187d9724",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "fb04be59c2f5bf010439b4c21f631be0028faa2d"
+    "commit": "41187d972457d539e1d8d70856d6549a7f1c4f3a"
   },
   "_source": "https://github.com/tmort/Socialite.git",
   "_target": "*",

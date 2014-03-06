@@ -11,7 +11,7 @@ var express  = require('express')
   , util     = require('util');
 
 var mongo = require('mongoskin');
-var db = mongo.db( config.db.url, {safe: true} ).collection('posts');
+var db = mongo.db( config.db.url, {safe: false} ).collection('posts');
 
 var app = express();
 app.configure(function(){
@@ -23,8 +23,8 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(app.router);
 });
 
 app.configure('development', function(){
@@ -43,21 +43,13 @@ for (var i = 0; i < config.redirects.length; i++) {
   }(i));
 }
 
-// Index Route
-app.get('/', routes.index);
-
 // API Routes
 app.get('/posts', posts.list);
 app.get('/posts/:alias', posts.item);
 app.put('/posts/inc/:alias', posts.itemInc);
 
-// Redirect all other routes to backbone router
-app.use(function(req, res) {
-  var newUrl = req.protocol + '://' + req.get('Host') + '/#' + req.url;
-  return res.redirect(newUrl);
-});
-
-// app.get('*', routes.index);
+// Index Route
+app.get('/*', routes.index);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
