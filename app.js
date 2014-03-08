@@ -14,6 +14,7 @@ var mongo = require('mongoskin');
 var db = mongo.db( config.db.url, {safe: false} ).collection('posts');
 
 var app = express();
+app.locals.moment = require('moment');
 app.configure(function(){
   app.set('port', config.port || 3000);
   app.set('views', __dirname + '/views');

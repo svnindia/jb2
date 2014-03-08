@@ -15083,6 +15083,7 @@ var BB = Backbone;
 
         eve.on('tag:search', function(tag){
             App.Helpers.removeClassesStartingWith('body', 'tag-');
+            App.Views.sidebar.hide();
 
             //Add tag
             $('body').addClass('tag-' + tag);
