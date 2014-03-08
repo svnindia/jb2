@@ -133,3 +133,13 @@ $.fn.isOnScreen = function(offsetBottom){
 
 };
 
+
+$(document).on("click", "a[href^='/']", function(event) {
+  var bypass = $(event.currentTarget).data('bypass');
+
+  if (!bypass && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+    event.preventDefault();
+    var url = $(event.currentTarget).attr("href").replace(/^\//, "");
+    App.Router.main.navigate(url, { trigger: true });
+  }
+});

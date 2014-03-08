@@ -286,6 +286,10 @@ article img {
         @include border-radius(4px);
         @include box-shadow( 2px, 0, 0, rgba(210,211,212,.75) );
         .title{
+            display: block;
+            text-decoration: none;
+            margin: $h1_margin;
+            font-size: $h1_font_size;
             font-weight: 400;
             color: $blue-dark-light;
             text-transform: uppercase;

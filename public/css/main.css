@@ -1,7 +1,5 @@
 @import url(../components/nprogress/nprogress.css);
-
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
-
 article,
 aside,
 details,
@@ -53,9 +51,7 @@ body {
 a:focus {
   outline: thin dotted;
 }
-
-a:hover,
-a:active {
+a:hover, a:active {
   outline: 0;
 }
 
@@ -228,8 +224,7 @@ input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
-button::-moz-focus-inner,
-input::-moz-focus-inner {
+button::-moz-focus-inner, input::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
@@ -247,23 +242,17 @@ table {
 /* ==========================================================================
    Settings
    ========================================================================== */
-
 /* ==========================================================================
    Colors
    ========================================================================== */
-
 /* green */
-
 /* blue */
-
 /* ==========================================================================
    Tag Colors
    ========================================================================== */
-
 /* ==========================================================================
    Global Dimensions
    ========================================================================== */
-
 /*!
  *  Font Awesome 3.2.1
  *  the iconic font designed for Bootstrap
@@ -289,10 +278,8 @@ table {
  *  Twitter: http://twitter.com/byscuits
  *  Work: Lead Product Designer @ Kyruus - http://kyruus.com
  */
-
 /* FONT PATH
  * -------------------------- */
-
 @font-face {
   font-family: 'FontAwesome';
   src: url("../components/font-awesome/font/fontawesome-webfont.eot?v=3.2.1");
@@ -303,7 +290,6 @@ table {
 
 /* FONT AWESOME CORE
  * -------------------------- */
-
 [class^="icon-"],
 [class*=" icon-"] {
   font-family: FontAwesome;
@@ -322,21 +308,18 @@ table {
 }
 
 /* makes the font 33% larger relative to the icon container */
-
 .icon-large:before {
   vertical-align: -10%;
   font-size: 1.33333em;
 }
 
 /* makes sure icons active on rollover in links */
-
 a [class^="icon-"],
 a [class*=" icon-"] {
   display: inline;
 }
 
 /* increased font size for icon-large */
-
 [class^="icon-"].icon-fixed-width,
 [class*=" icon-"].icon-fixed-width {
   display: inline-block;
@@ -344,7 +327,6 @@ a [class*=" icon-"] {
   text-align: right;
   padding-right: 0.28571em;
 }
-
 [class^="icon-"].icon-fixed-width.icon-large,
 [class*=" icon-"].icon-fixed-width.icon-large {
   width: 1.42857em;
@@ -354,11 +336,9 @@ a [class*=" icon-"] {
   margin-left: 2.14286em;
   list-style-type: none;
 }
-
 .icons-ul > li {
   position: relative;
 }
-
 .icons-ul .icon-li {
   position: absolute;
   left: -2.14286em;
@@ -393,7 +373,6 @@ a [class*=" icon-"] {
 .icon-2x {
   font-size: 2em;
 }
-
 .icon-2x.icon-border {
   border-width: 2px;
   border-radius: 4px;
@@ -402,7 +381,6 @@ a [class*=" icon-"] {
 .icon-3x {
   font-size: 3em;
 }
-
 .icon-3x.icon-border {
   border-width: 3px;
   border-radius: 5px;
@@ -411,7 +389,6 @@ a [class*=" icon-"] {
 .icon-4x {
   font-size: 4em;
 }
-
 .icon-4x.icon-border {
   border-width: 4px;
   border-radius: 6px;
@@ -420,7 +397,6 @@ a [class*=" icon-"] {
 .icon-5x {
   font-size: 5em;
 }
-
 .icon-5x.icon-border {
   border-width: 5px;
   border-radius: 7px;
@@ -438,7 +414,6 @@ a [class*=" icon-"] {
 [class*=" icon-"].pull-left {
   margin-right: .3em;
 }
-
 [class^="icon-"].pull-right,
 [class*=" icon-"].pull-right {
   margin-left: .3em;
@@ -446,9 +421,7 @@ a [class*=" icon-"] {
 
 /* BOOTSTRAP SPECIFIC CLASSES
  * -------------------------- */
-
 /* Bootstrap 2.0 sprites.less reset */
-
 [class^="icon-"],
 [class*=" icon-"] {
   display: inline;
@@ -463,7 +436,6 @@ a [class*=" icon-"] {
 }
 
 /* more sprites.less reset */
-
 .icon-white,
 .nav-pills > .active > a > [class^="icon-"],
 .nav-pills > .active > a > [class*=" icon-"],
@@ -481,46 +453,36 @@ a [class*=" icon-"] {
 }
 
 /* keeps Bootstrap styles with and without icons the same */
-
 .btn [class^="icon-"].icon-large,
-.btn [class*=" icon-"].icon-large,
-.nav [class^="icon-"].icon-large,
+.btn [class*=" icon-"].icon-large, .nav [class^="icon-"].icon-large,
 .nav [class*=" icon-"].icon-large {
   line-height: .9em;
 }
-
 .btn [class^="icon-"].icon-spin,
-.btn [class*=" icon-"].icon-spin,
-.nav [class^="icon-"].icon-spin,
+.btn [class*=" icon-"].icon-spin, .nav [class^="icon-"].icon-spin,
 .nav [class*=" icon-"].icon-spin {
   display: inline-block;
 }
 
-.nav-tabs [class^="icon-"],
-.nav-tabs [class^="icon-"].icon-large,
+.nav-tabs [class^="icon-"], .nav-tabs [class^="icon-"].icon-large,
 .nav-tabs [class*=" icon-"],
-.nav-tabs [class*=" icon-"].icon-large,
-.nav-pills [class^="icon-"],
-.nav-pills [class^="icon-"].icon-large,
+.nav-tabs [class*=" icon-"].icon-large, .nav-pills [class^="icon-"], .nav-pills [class^="icon-"].icon-large,
 .nav-pills [class*=" icon-"],
 .nav-pills [class*=" icon-"].icon-large {
   line-height: .9em;
 }
 
-.btn [class^="icon-"].pull-left.icon-2x,
-.btn [class^="icon-"].pull-right.icon-2x,
+.btn [class^="icon-"].pull-left.icon-2x, .btn [class^="icon-"].pull-right.icon-2x,
 .btn [class*=" icon-"].pull-left.icon-2x,
 .btn [class*=" icon-"].pull-right.icon-2x {
   margin-top: .18em;
 }
-
 .btn [class^="icon-"].icon-spin.icon-large,
 .btn [class*=" icon-"].icon-spin.icon-large {
   line-height: .8em;
 }
 
-.btn.btn-small [class^="icon-"].pull-left.icon-2x,
-.btn.btn-small [class^="icon-"].pull-right.icon-2x,
+.btn.btn-small [class^="icon-"].pull-left.icon-2x, .btn.btn-small [class^="icon-"].pull-right.icon-2x,
 .btn.btn-small [class*=" icon-"].pull-left.icon-2x,
 .btn.btn-small [class*=" icon-"].pull-right.icon-2x {
   margin-top: .25em;
@@ -530,26 +492,21 @@ a [class*=" icon-"] {
 .btn.btn-large [class*=" icon-"] {
   margin-top: 0;
 }
-
-.btn.btn-large [class^="icon-"].pull-left.icon-2x,
-.btn.btn-large [class^="icon-"].pull-right.icon-2x,
+.btn.btn-large [class^="icon-"].pull-left.icon-2x, .btn.btn-large [class^="icon-"].pull-right.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-left.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
   margin-top: .05em;
 }
-
 .btn.btn-large [class^="icon-"].pull-left.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-left.icon-2x {
   margin-right: .2em;
 }
-
 .btn.btn-large [class^="icon-"].pull-right.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
   margin-left: .2em;
 }
 
 /* Fixes alignment in nav lists */
-
 .nav-list [class^="icon-"],
 .nav-list [class*=" icon-"] {
   line-height: inherit;
@@ -557,9 +514,7 @@ a [class*=" icon-"] {
 
 /* EXTRAS
  * -------------------------- */
-
 /* Stacked and layered icon */
-
 .icon-stack {
   position: relative;
   display: inline-block;
@@ -568,7 +523,6 @@ a [class*=" icon-"] {
   line-height: 2em;
   vertical-align: -35%;
 }
-
 .icon-stack [class^="icon-"],
 .icon-stack [class*=" icon-"] {
   display: block;
@@ -580,14 +534,12 @@ a [class*=" icon-"] {
   line-height: inherit;
   *line-height: 2em;
 }
-
 .icon-stack .icon-stack-base {
   font-size: 2em;
   *line-height: 1em;
 }
 
 /* Animated rotating icon */
-
 .icon-spin {
   display: inline-block;
   -webkit-animation: spin 2s infinite linear;
@@ -595,7 +547,6 @@ a [class*=" icon-"] {
 }
 
 /* Prevent stack and spinners from being taken inline when inside a link */
-
 a .icon-stack,
 a .icon-spin {
   display: inline-block;
@@ -637,7 +588,6 @@ a .icon-spin {
 }
 
 /* Icon rotations and mirroring */
-
 .icon-rotate-90:before {
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
@@ -672,18 +622,12 @@ a .icon-spin {
 }
 
 /* ensure rotation occurs inside anchor tags */
-
-a .icon-rotate-90:before,
-a .icon-rotate-180:before,
-a .icon-rotate-270:before,
-a .icon-flip-horizontal:before,
-a .icon-flip-vertical:before {
+a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, a .icon-flip-horizontal:before, a .icon-flip-vertical:before {
   display: inline-block;
 }
 
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
  * readers do not read off random characters that represent icons */
-
 .icon-glass:before {
   content: "\f000";
 }
@@ -2159,7 +2103,6 @@ pre {
   word-wrap: normal;
   white-space: pre;
 }
-
 pre code {
   display: block;
 }
@@ -2225,7 +2168,6 @@ p code {
     color: #e85379;
   }
 }
-
 @media print, projection {
   pre code {
     background-color: none;
@@ -2280,7 +2222,6 @@ p code {
     color: #060;
   }
 }
-
 ol.linenums {
   margin-top: 0;
   margin-bottom: 0;
@@ -2307,7 +2248,7 @@ li.L9 {
 
 body {
   background-color: #ebeced;
-  color: grey;
+  color: gray;
   line-height: 1.5;
   font: 16px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -2368,14 +2309,12 @@ article img {
   float: right;
 }
 
-.clear:before,
-.clear:after {
+.clear:before, .clear:after {
   content: " ";
   /* 1 */
   display: table;
   /* 2 */
 }
-
 .clear:after {
   clear: both;
 }
@@ -2404,7 +2343,6 @@ article img {
   overflow: hidden;
   padding-left: 220px;
 }
-
 .container .column {
   position: relative;
   float: left;
@@ -2431,31 +2369,24 @@ article img {
   border-radius: 4px;
   background-color: #2980b9;
 }
-
 .btn:hover {
   background-color: #2d8cca;
 }
-
 .btn.tips {
   background-color: #16a085;
 }
-
 .btn.tips:hover {
   background-color: #18b294;
 }
-
 .btn.tutorials {
   background-color: #2980b9;
 }
-
 .btn.tutorials:hover {
   background-color: #2d8cca;
 }
-
 .btn.personal {
   background-color: #e74c3c;
 }
-
 .btn.personal:hover {
   background-color: #e95d4e;
 }
@@ -2465,7 +2396,6 @@ article img {
     Header
   ==========================================================================
 */
-
 header {
   z-index: 100;
   height: 20px;
@@ -2474,7 +2404,6 @@ header {
   -webkit-box-shadow: 0 1px 0 rgba(210, 211, 212, 0.25);
   box-shadow: 0 1px 0 rgba(210, 211, 212, 0.25);
 }
-
 header .search {
   position: relative;
   width: 190px;
@@ -2484,23 +2413,18 @@ header .search {
   border: none;
   border-left: 1px solid #eeeeee;
 }
-
 header .search:-moz-placeholder {
   color: #eeeeee;
 }
-
 header .search::-moz-placeholder {
   color: #eeeeee;
 }
-
 header .search:-ms-input-placeholder {
   color: #eeeeee;
 }
-
 header .search::-webkit-input-placeholder {
   color: #eeeeee;
 }
-
 header .title {
   font-size: 26px;
   color: #282b2f;
@@ -2509,18 +2433,15 @@ header .title {
   font-weight: 200;
   text-transform: uppercase;
 }
-
 header .title a {
   padding: 5px 20px 25px 20px;
   margin-left: -20px;
   display: none;
 }
-
 header .title a:active i {
   color: #1e2124;
   text-shadow: 0px 0px 23px #4E6B91;
 }
-
 header .title a i {
   color: #999999;
 }
@@ -2530,7 +2451,6 @@ header .title a i {
     Sidebar: Logo, Nav..etc
   ==========================================================================
 */
-
 #sidebar {
   position: fixed;
   left: 0;
@@ -2540,7 +2460,6 @@ header .title a i {
   background-color: #282b2f;
   height: 1000px;
 }
-
 #sidebar .logo {
   height: 60px;
   background-color: #1e2124;
@@ -2548,7 +2467,6 @@ header .title a i {
   background-repeat: no-repeat;
   background-image: url(../img/logo.png);
 }
-
 @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
   #sidebar .logo {
     /* on retina, use image that's scaled by 2 */
@@ -2557,39 +2475,29 @@ header .title a i {
     background-size: 105px 29px;
   }
 }
-
 #sidebar .nav {
   list-style-type: none;
   padding: 0;
   margin: 20px 0;
 }
-
 #sidebar .nav li.all {
   border-left: 2px solid #999999;
 }
-
 #sidebar .nav li.tips {
   border-left: 2px solid #16a085;
 }
-
 #sidebar .nav li.tutorials {
   border-left: 2px solid #2980b9;
 }
-
 #sidebar .nav li.personal {
   border-left: 2px solid #e74c3c;
 }
-
-#sidebar .nav li:hover,
-#sidebar .nav li.active {
+#sidebar .nav li:hover, #sidebar .nav li.active {
   background-color: #2e3136;
 }
-
-#sidebar .nav li:hover a,
-#sidebar .nav li.active a {
+#sidebar .nav li:hover a, #sidebar .nav li.active a {
   color: #eeeeee;
 }
-
 #sidebar .nav a {
   color: #999999;
   width: 100%;
@@ -2598,30 +2506,25 @@ header .title a i {
   margin-left: 10px;
   padding: 10px 0;
 }
-
 #sidebar .nav a i {
   width: 14px;
   margin-right: 20px;
   display: inline-block;
   text-align: center;
 }
-
 #sidebar .comments {
   padding: 5px 10px;
   border-bottom: 1px solid #2e3136;
 }
-
 #sidebar .comments p {
   margin: 0 0 5px 0;
   color: #999999;
 }
-
 #sidebar .comments > span {
   margin: 0 0 5px 0;
   display: block;
   font-size: 90%;
 }
-
 #sidebar h3 {
   padding: 5px 10px;
   background-color: #1e2124;
@@ -2629,7 +2532,6 @@ header .title a i {
   font-size: 13px;
   color: #eeeeee;
 }
-
 #sidebar footer {
   color: #41464c;
   text-transform: uppercase;
@@ -2638,12 +2540,10 @@ header .title a i {
   width: 100%;
   font-size: x-small;
 }
-
 #sidebar > p {
   font-size: 80%;
   padding: 0 10px;
 }
-
 #sidebar .twitter-follow-button {
   padding: 0 0 0 11px;
 }
@@ -2653,7 +2553,6 @@ header .title a i {
     Content
   ==========================================================================
 */
-
 .content article {
   visibility: hidden;
   padding: 5px 25px;
@@ -2664,17 +2563,18 @@ header .title a i {
   -webkit-box-shadow: 0 2px 0 rgba(210, 211, 212, 0.75);
   box-shadow: 0 2px 0 rgba(210, 211, 212, 0.75);
 }
-
 .content article .title {
+  display: block;
+  text-decoration: none;
+  margin: 0.67em 0;
+  font-size: 2em;
   font-weight: 400;
   color: #282b2f;
   text-transform: uppercase;
 }
-
 .content article .title:hover {
   cursor: pointer;
 }
-
 .content article .footer {
   font-size: 95%;
   margin: 0 -25px;
@@ -2683,26 +2583,21 @@ header .title a i {
   border-top: 1px solid #eeeeee;
   margin-top: 20px;
 }
-
 .content article .footer .meta > span {
   margin-right: 20px;
   display: inline-block;
 }
-
 .content article .footer .meta i {
   margin: 0 10px 0 25px;
 }
-
 .content article .footer .meta i:first-child {
   margin-left: 0;
 }
-
 .content article .footer .meta a {
   display: inline;
   padding-left: 5px;
   color: #999999;
 }
-
 .content article.in {
   visibility: visible !important;
   -webkit-transform: translateY(150px);
@@ -2711,7 +2606,6 @@ header .title a i {
   -webkit-animation: in 0.8s ease forwards;
   animation: in 0.8s ease forwards;
 }
-
 .content article.already-in {
   visibility: visible !important;
   -webkit-transform: translateY(0);
@@ -2727,23 +2621,19 @@ header .title a i {
   display: block;
   font-weight: 200;
 }
-
 .endCollection * {
   margin: 0;
   padding: 0;
 }
-
 .endCollection .sadText {
   font-weight: 200;
 }
-
 .endCollection a {
   color: #2980b9;
   font-size: 24px;
   padding: 0 17px 0;
   text-decoration: none;
 }
-
 .endCollection a:hover i {
   color: #409ad5;
 }
@@ -2779,7 +2669,6 @@ header .title a i {
     Modal Viewer
   ==========================================================================
 */
-
 .md-overlay {
   visibility: hidden;
   position: fixed;
@@ -2804,7 +2693,6 @@ header .title a i {
   font-size: 31px;
   z-index: 10000;
 }
-
 .md-overlay-x:hover {
   cursor: pointer;
   color: #FFF;
@@ -2826,59 +2714,46 @@ header .title a i {
   padding: 0 25px;
   padding-bottom: 15px;
 }
-
 .md-content article .info {
   border-bottom: 1px solid #eeeeee;
   padding: 5px 20px;
 }
-
 .md-content article .info h1 {
   margin: 0;
 }
-
 .md-content article .info .meta {
   color: #999999;
 }
-
 .md-content article .info .meta > span {
   margin-right: 20px;
   display: inline-block;
 }
-
 .md-content article .info .meta i {
   margin: 0 10px 0 25px;
 }
-
 .md-content article .info .meta i:first-child {
   margin-left: 0;
 }
-
 .md-content article .info .meta a {
   display: inline;
   padding-left: 5px;
   color: #999999;
 }
-
 .md-content article .info.all {
   border-left: 3px solid #999999;
 }
-
 .md-content article .info.tips {
   border-left: 3px solid #16a085;
 }
-
 .md-content article .info.tutorials {
   border-left: 3px solid #2980b9;
 }
-
 .md-content article .info.personal {
   border-left: 3px solid #e74c3c;
 }
-
 .md-content article .full {
   margin: 0 -25px;
 }
-
 .md-content article h2 {
   border-bottom: 1px solid #eeeeee;
 }
@@ -2906,7 +2781,6 @@ body.md-mode .md-overlay {
    Embeds
   ==========================================================================
 */
-
 .embed {
   position: relative;
   padding-bottom: 56.25%;
@@ -2916,10 +2790,7 @@ body.md-mode .md-overlay {
   max-width: 100%;
   height: auto;
 }
-
-.embed iframe,
-.embed object,
-.embed embed {
+.embed iframe, .embed object, .embed embed {
   position: absolute;
   top: 0;
   left: 0;
@@ -2932,16 +2803,13 @@ body.md-mode .md-overlay {
    nprogress overrides
   ==========================================================================
 */
-
 body.tag-personal #nprogress .bar {
   background: #e74c3c;
 }
-
 body.tag-personal #nprogress .peg {
   -webkit-box-shadow: 0 0 10px #e74c3c, 0 0 5px #e74c3c;
   box-shadow: 0 0 10px #e74c3c, 0 0 5px #e74c3c;
 }
-
 body.tag-personal #nprogress .spinner-icon {
   border-top-color: #e74c3c;
   border-left-color: #e74c3c;
@@ -2950,12 +2818,10 @@ body.tag-personal #nprogress .spinner-icon {
 body.tag-tutorials #nprogress .bar {
   background: #2980b9;
 }
-
 body.tag-tutorials #nprogress .peg {
   -webkit-box-shadow: 0 0 10px #2980b9, 0 0 5px #2980b9;
   box-shadow: 0 0 10px #2980b9, 0 0 5px #2980b9;
 }
-
 body.tag-tutorials #nprogress .spinner-icon {
   border-top-color: #2980b9;
   border-left-color: #2980b9;
@@ -2964,12 +2830,10 @@ body.tag-tutorials #nprogress .spinner-icon {
 body.tag-tips #nprogress .bar {
   background: #16a085;
 }
-
 body.tag-tips #nprogress .peg {
   -webkit-box-shadow: 0 0 10px #16a085, 0 0 5px #16a085;
   box-shadow: 0 0 10px #16a085, 0 0 5px #16a085;
 }
-
 body.tag-tips #nprogress .spinner-icon {
   border-top-color: #16a085;
   border-left-color: #16a085;
@@ -2984,7 +2848,6 @@ body.tag-tips #nprogress .spinner-icon {
    Debug Trick
   ==========================================================================
 */
-
 @media screen and (max-width: 995px) {
   #sidebar {
     left: -220px;
@@ -2994,21 +2857,17 @@ body.tag-tips #nprogress .spinner-icon {
   .container {
     padding-left: 0;
   }
-
   .container.showSidebar #sidebar {
     left: 0;
   }
-
   .container.showSidebar header {
     left: 220px;
     z-index: 2;
   }
-
   .container.showSidebar .content {
     left: 220px;
     z-index: 1;
   }
-
   .container .content {
     position: relative;
   }
@@ -3020,42 +2879,34 @@ body.tag-tips #nprogress .spinner-icon {
     padding: 0;
     height: 40px;
   }
-
   header .inner {
     padding: 10px 4%;
   }
-
   header .search {
     padding: 10px 18px;
     top: -10px;
   }
-
   header .title {
     padding-left: 0;
     font-size: 22px;
   }
-
   header .title a {
     text-decoration: none;
     display: inline-block;
   }
-
   header .title a:hover {
     text-decoration: none;
   }
 }
-
 @media screen and (max-width: 680px) {
   .content article .footer .meta {
     float: none;
     overflow: hidden;
     text-align: center;
   }
-
   .content article .footer .meta > span {
     text-align: center;
   }
-
   .content article .footer .btn {
     float: none;
     display: block;
@@ -3064,4 +2915,3 @@ body.tag-tips #nprogress .spinner-icon {
     margin: 10px auto 0;
   }
 }
-/*# sourceMappingURL=main.css.map */

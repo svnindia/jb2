@@ -14560,6 +14560,15 @@ $.fn.isOnScreen = function(offsetBottom){
 };
 
 
+$(document).on("click", "a[href^='/']", function(event) {
+  var bypass = $(event.currentTarget).data('bypass');
+
+  if (!bypass && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+    event.preventDefault();
+    var url = $(event.currentTarget).attr("href").replace(/^\//, "");
+    App.Router.main.navigate(url, { trigger: true });
+  }
+});
 var eve = _.extend({}, Backbone.Events);
 var BB = Backbone;
 (function(exports, $, BB, _){
@@ -14785,7 +14794,7 @@ var BB = Backbone;
         tagName: 'article',
 
         events: {
-            'click a.btn': 'open',
+            // 'click a.btn': 'open',
             'click .title'  : 'open'
         },
 
@@ -14901,22 +14910,9 @@ var BB = Backbone;
     App.Views.Sidebar = BB.View.extend({
         el: '#sidebar',
 
-        events: {
-            'click .nav a': 'onItemClick'
-        },
-
         initialize: function(){
             this.showActiveState();
             this.on('nav:active', this.showActiveState);
-        },
-
-        onItemClick: function(e){
-            var tag = $(e.currentTarget).attr('data-tag');
-            if(tag == 'all') return;
-            App.Router.main.navigate('tag/' + tag, {trigger: true});
-            this.hide();
-
-            e && e.preventDefault();
         },
 
         show: function(){

@@ -43,19 +43,19 @@ body(ontouchstart).clear
             //- Navigation Menu
             ul.nav.clear
                 li.all
-                    a(href="/", data-tag="all")
+                    a(href="/", data-tag="all", data-bypass="true")
                         i.icon-home
                         | All
                 li.tips
-                    a(href="#", data-tag="tips")
+                    a(href="/tag/tips", data-tag="tips")
                         i.icon-lightbulb
                         | Tips
                 li.tutorials
-                    a(href="#", data-tag="tutorials")
+                    a(href="/tag/tutorials", data-tag="tutorials")
                         i.icon-question-sign
                         | Tutorials
                 li.personal
-                    a(href="#", data-tag="personal")
+                    a(href="/tag/personal", data-tag="personal")
                         i.icon-male
                         | Personal
             //- Recent Comments Secion
@@ -97,7 +97,7 @@ body(ontouchstart).clear
 
     //- BB Template: Post
     script(type="text/template", id="articleTemplate")
-        h1.title(data-alias!="<%= alias %>") <%= title %>
+        a.title(href!="/open/<%= alias %>", data-alias!="<%= alias %>") <%= title %>
         <%= contentIntro %>
         .footer.clear
             .meta.pull-left
@@ -113,7 +113,7 @@ body(ontouchstart).clear
                 span
                     i.icon-tags
                     <%= tags %>
-            a.btn.pull-right(class!="<%= tags %>",href="#", data-alias!="<%= alias %>") open
+            a.btn.pull-right(class!="<%= tags %>", href!="/open/<%= alias %>", data-alias!="<%= alias %>") open
 
     //- BB Template: End of infinite scroll
     script(type="text/template", id="collectionEnd")

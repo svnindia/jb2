@@ -223,7 +223,7 @@ var BB = Backbone;
         tagName: 'article',
 
         events: {
-            'click a.btn': 'open',
+            // 'click a.btn': 'open',
             'click .title'  : 'open'
         },
 
@@ -339,22 +339,9 @@ var BB = Backbone;
     App.Views.Sidebar = BB.View.extend({
         el: '#sidebar',
 
-        events: {
-            'click .nav a': 'onItemClick'
-        },
-
         initialize: function(){
             this.showActiveState();
             this.on('nav:active', this.showActiveState);
-        },
-
-        onItemClick: function(e){
-            var tag = $(e.currentTarget).attr('data-tag');
-            if(tag == 'all') return;
-            App.Router.main.navigate('tag/' + tag, {trigger: true});
-            this.hide();
-
-            e && e.preventDefault();
         },
 
         show: function(){
