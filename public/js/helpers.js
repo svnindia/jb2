@@ -72,12 +72,12 @@ App.Helpers = {
     updateMetaInfo: function(model){
       // Defaults
       this.title        = 'Blog - My online Playground';
-      this.description  = 'Web Dev, Seminole living in Silicon Valley. Checkout my blog!';
+      this.description  = 'Web Development, Technology, Tutorials and more!';
       this.url          = window.location.href;
 
       if(model){
-        this.title       = model.get('title');
-        this.description = model.get('contentIntro');
+        this.title       = model.get('title') || this.title;
+        this.description = model.get('description') || model.get('contentIntro') || this.description
       }
 
       $(document).attr('title', this.title);
